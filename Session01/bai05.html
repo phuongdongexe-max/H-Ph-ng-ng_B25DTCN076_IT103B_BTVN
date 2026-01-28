@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 5</title>
+</head>
+<body>
+    <script>
+        let bookTitle = prompt("Nhập tên sách:");
+        let publicationYearInput = prompt("Nhập năm xuất bản:");
+        let currentYearInput = prompt("Nhập năm hiện tại:");
+        let publicationYear = Number(publicationYearInput);
+        let currentYear = Number(currentYearInput);
+        let bookAge = currentYear - publicationYear;
+
+        console.log("Sách: " + bookTitle);
+        console.log("Năm xuất bản: " + publicationYear);
+        console.log("Tuổi của sách: " + bookAge + " năm");
+    </script>
+
+</body>
+</html>

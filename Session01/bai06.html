@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 06</title>
+</head>
+<body>
+    <script>
+        let bookTitle = prompt("Nhập tên sách:");
+        let bookOrder = prompt("Nhập số thứ tự sách:");
+        let normalizedTitle = bookTitle.trim().toUpperCase();
+        let bookCode = "LIB - " + normalizedTitle + " - " + bookOrder;
+
+        console.log("Tên sách gốc: " + bookTitle);
+        console.log("Mã sách sau chuẩn hóa: " + bookCode);
+    </script>
+
+</body>
+</html>

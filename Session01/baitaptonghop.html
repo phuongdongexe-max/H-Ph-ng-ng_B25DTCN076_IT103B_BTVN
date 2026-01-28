@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài tập tin học</title>
+</head>
+<body>
+    <script>
+
+        // Nhập
+
+        let bookTitleInput = prompt("Nhập tên sách:");
+        let authorInput = prompt("Nhập tên tác giả:");
+        let yearInput = prompt("Nhập năm xuất bản:");
+        let priceInput = prompt("Nhập giá tiền 1 cuốn:");
+        let quantityInput = prompt("Nhập số lượng nhập kho:");
+        let year = Number(yearInput);
+        let price = Number(priceInput);
+        let quantity = Number(quantityInput);
+        let processedTitle = bookTitleInput.trim().toUpperCase();
+        let processedAuthor = authorInput.trim().toUpperCase();
+        let authorPrefix = processedAuthor.substring(0, 3);
+        let randomId = Math.floor(Math.random() * 1000) + 1;
+        let bookId = authorPrefix + year + "-" + randomId;
+        let currentYear = 2026;
+        let bookAge = currentYear - year;
+        let totalValue = price * quantity;
+        let shelfNumber = Math.floor(Math.random() * 10) + 1;
+
+        // Hiện thị
+
+        let report = "";
+        report = report + "--- PHIẾU NHẬP KHO ---\n";
+        report = report + "Mã sách: " + bookId + "\n";
+        report = report + "Tên sách: " + processedTitle + "\n";
+        report = report + "Tác giả: " + processedAuthor + "\n";
+        report = report + "Năm xuất bản: " + year + "\n";
+        report = report + "Tuổi sách: " + bookAge + " năm\n";
+        report = report + "Tổng giá trị: " + totalValue + " VNĐ\n";
+        report = report + "Kệ số " + shelfNumber;
+
+        console.log(report);
+
+    </script>
+
+</body>
+</html>
