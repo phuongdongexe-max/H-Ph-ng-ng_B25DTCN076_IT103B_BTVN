@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý trạng thái sách</title>
+</head>
+<body>
+    <h1>Hãy ctrl + shift + i </h1>
+    <script>
+        let bookTitle = prompt("Nhập tên sách:");
+        let statusInput = prompt("Trạng thái sách (Nhập: 'có sẵn' hoặc 'đã mượn'):");
+        let yearInput = prompt("Nhập năm xuất bản:");
+        let currentYear = 2026;
+        let publishYear = Number(yearInput);
+        let bookAge = currentYear - publishYear;
+        let bookStatus = statusInput.toLowerCase().trim();     
+       
+        console.log("--- KẾT QUẢ KIỂM TRA ---");
+        console.log("Sách: " + bookTitle);
+        console.log("Tuổi sách: " + bookAge + " năm");
+        
+        if (bookStatus === "có sẵn" && bookAge <= 5) {
+            console.log("Kết luận: Sách này mới và có sẵn để mượn.");
+        }
+        else if (bookStatus === "có sẵn" && bookAge > 5) {
+            console.log("Kết luận: Sách này có sẵn nhưng đã lâu năm.");
+        }
+        else if (bookStatus === "đã mượn" && bookAge <= 10) {
+            console.log("Kết luận: Sách này đã mượn nhưng khá mới, có thể mượn lại sau.");
+        }
+        else if (bookStatus === "đã mượn" && bookAge > 10) {
+            console.log("Kết luận: Sách này đã mượn và khá cũ.");
+        }
+        else {
+            console.log("Lỗi: Trạng thái nhập vào không hợp lệ hoặc năm không đúng.");
+        }
+
+    </script>
+
+</body>
+</html>

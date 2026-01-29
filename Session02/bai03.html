@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 3</title>
+</head>
+<body>
+    <script>
+        // Nhập dữ liệu từ người dùng
+        let nameBook = prompt("Nhập tên sách: ");
+        let bookGerne = prompt("Nhập thể loại sách: ");
+        let status = prompt("Nhập tình trạng cuốn sách: ");
+
+        // Xử lý dữ liệu và hiển thị ở màn hình console
+        if (bookGerne == "Khoa học" || bookGerne == "Lịch sử"){
+            if (status == "Đã mượn"){
+                console.log("Cuốn sách " + nameBook + " đã được mượn.");
+            } else {
+                console.log("Cuốn sách " + nameBook + " có thể được mượn.");
+            }
+        } else if (bookGerne == "Văn học" || bookGerne == "Truyện"){
+            if (status == "Đã mượn"){
+                console.log("Cuốn sách " + nameBook + " đã được mượn.");
+            } else {
+                console.log("Cuốn sách " + nameBook + " có thể được mượn.");
+            }
+        }
+    </script>
+</body>
+</html>

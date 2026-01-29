@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Library Loan Manager</title>
+</head>
+<body>
+    <script>        
+        let bookTitle = prompt("Nhập tên sách:");
+        let borrowerName = prompt("Nhập tên người mượn:");
+        let statusInput = prompt("Tình trạng sách (Nhập: có sẵn / đã mượn / không có sẵn):");
+        let daysInput = +prompt("Số ngày mượn (Nhập số):");
+        let cardInput = prompt("Bạn có thẻ thư viện chưa? (Nhập: có / không):");
+        let bookStatus = statusInput.trim().toLowerCase();
+        let hasLibraryCard = cardInput.trim().toLowerCase();
+        console.log("--- KẾT QUẢ XỬ LÝ ---");
+
+        if (bookStatus === "có sẵn" && hasLibraryCard === "có") {
+            console.log("Chúc mừng, bạn có thể mượn sách này.");
+        }
+        else if (bookStatus === "đã mượn" && daysInput < 30) {
+            if (hasLibraryCard === "có") {
+                console.log("Sách đang được mượn, vui lòng đợi đến khi trả lại.");
+            } else {
+                console.log("Bạn không thể mượn sách nếu không có thẻ thư viện.");
+            }
+        }
+        else if (bookStatus === "không có sẵn") {
+            console.log("Sách này hiện tại không có sẵn trong thư viện, bạn có thể đăng ký mượn sau.");
+        }
+        else {
+            console.log("Thông tin không hợp lệ, vui lòng nhập lại.");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 4</title>
+</head>
+<body>
+    <script>
+        let bookTitle = prompt("Nhập tên sách:");
+        let borrowerName = prompt("Nhập tên người mượn:");
+        
+        // Nhập mức độ yêu thích và chuyển ngay sang kiểu Số
+        let rating = +prompt("Nhập mức độ yêu thích (1-5):");
+        
+        console.log("--- THÔNG TIN MƯỢN SÁCH ---");
+        console.log("Người mượn: " + borrowerName);
+        console.log("Sách: " + bookTitle);
+        console.log("Đánh giá: " + rating + " sao");
+        
+        if (rating === 5 || rating === 4) {
+            // Nếu rating là 5 hoặc 4
+            console.log("Kết quả: Đây là cuốn sách yêu thích của bạn, hãy đọc ngay!");
+        } 
+        else if (rating === 3) {
+            // Nếu rating là 3
+            console.log("Kết quả: Sách này khá ổn, có thể mượn.");
+        } 
+        else if (rating === 2 || rating === 1) {
+            // Nếu rating là 2 hoặc 1
+            console.log("Kết quả: Sách này bạn có thể cân nhắc mượn lại sau.");
+        } 
+        else {
+            // Trường hợp người dùng nhập số độc lạ
+            console.log("Lỗi: Vui lòng chỉ nhập mức độ từ 1 đến 5.");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 1</title>
+</head>
+<body>
+    <script>
+        // Lấy thông tin từ người dùng
+        let nameBook = prompt("Nhập tên cuốn sách");
+        let author = prompt("Tên tác giả:");
+        let born = prompt("Năm phát hành");
+
+        // Xử lý thông tin
+        if (born === "2026"){
+            console.log("Đây là sách mới!");
+        } else if (2026 - born <= 5){
+            console.log("Đây là sách khá mới!");
+        } else {
+            console.log("Đây là sách cũ!");
+        }
+
+    </script>
+</body>
+</html>

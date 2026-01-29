@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Hệ Thống Mượn Trả Thư Viện</title>
+</head>
+<body>
+    <script>
+        let userName = prompt("Nhập tên người dùng:");
+        let roleInput = prompt("Nhập vai trò (admin, student, guest):").trim().toLowerCase();
+        let balanceInput = +prompt("Nhập số dư tài khoản:");
+        let cardStatusInput = prompt("Nhập trạng thái thẻ (true nếu hoạt động):");
+        let overdueInput = +prompt("Nhập số ngày quá hạn:");
+        let isCardActive = cardStatusInput.trim().toLowerCase() === "true";
+        let roleMessage = "";
+        if (roleInput === "admin") {
+            roleMessage = "Chào Admin, bạn có toàn quyền hệ thống";
+        } else if (roleInput === "student") {
+            IroleInputMessage = "Chào sinh viên, bạn có thể mượn sách";
+        } else if (roleInput === "guest") {
+            roleMessage = "Chào khách, bạn chỉ có thể đọc tại chỗ";
+        } else {
+            roleMessage = "Lỗi: Vai trò không hợp lệ!";
+        }
+
+        let borrowResult = "YÊU CẦU BỊ TỪ CHỐI";
+        if (userName && (roleInput === "student" || roleInput === "admin") && balanceInput > 0 && isCardActive) {
+            borrowResult = "ĐƯỢC PHÉP MƯỢN SÁCH";
+        }
+
+        let fineAmount = 0;
+        let fineNote = "";
+        
+        if (overdueInput <= 0) {
+            fineAmount = 0;
+        } else if (overdueInput >= 1 && overdueInput <= 5) {
+            fineAmount = overdueInput * 5000;
+        } else if (overdueInput >= 6 && overdueInput <= 10) {
+            fineAmount = overdueInput * 10000;
+        } else {
+            fineAmount = 200000;
+            fineNote = "TÀI KHOẢN BỊ KHÓA";
+        }
+
+        console.log(`
+        --- HỆ THỐNG MƯỢN TRẢ ---
+        Người dùng: ${userName ? userName.toUpperCase() : "KHÔNG TÊN"}
+        Quyền hạn: ${roleMessage}
+        Kết quả mượn: ${borrowResult}
+        Tình trạng trả sách: ${overdueInput > 0 ? "Quá hạn " + overdueInput + " ngày" : "Đúng hạn"} ${fineNote ? "(" + fineNote + ")" : ""}
+        Tiền phạt: ${fineAmount} VNĐ
+        `);
+    </script>
+</body>
+</html>
