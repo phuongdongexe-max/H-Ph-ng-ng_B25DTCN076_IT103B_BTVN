@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 1</title>
+</head>
+<body>
+<script>
+    let nickName;
+    let bookName;
+    let borrowDays;
+    let turn = +prompt("Hôm nay có bao nhiêu lượt mượn sách?");
+
+    if (turn <= 0 || isNaN(turn)) {
+        console.log('Lỗi!!! Giá trị đã nhập không hợp lệ');
+    } else {
+        for (let i = 0; i < turn; i++) {
+            nickName = prompt("Nhập tên người mượn: ");
+            bookName = prompt("Nhập tên cuốn sách: ");
+            borrowDays = +prompt("Nhập số ngày mượn sách (Từ 1 -> 30 ngày): ");
+
+            let message;
+            if (borrowDays > 14) {
+                message = "Cảnh báo: Thời gian mượn vượt quy định (tối đa 14 ngày)";
+            } else {
+                message = "Mượn thành công";
+            }
+
+            console.log("Lượt mượn sách thứ ", i + 1);
+            console.log(message);
+            console.log(`Tên: ${nickName}`);
+            console.log(`Tên sách mượn: ${bookName}`);
+            console.log(`Số ngày mượn: ${borrowDays}`);
+        }
+    }
+</script>
+</body>
+</html>

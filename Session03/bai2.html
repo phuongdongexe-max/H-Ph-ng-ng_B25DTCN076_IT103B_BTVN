@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 2</title>
+</head>
+<body>
+<script>
+    let totalTurns;
+    let countLate = 0;
+
+    totalTurns = +prompt("Hôm nay có bao nhiêu lượt trả sách?");
+
+    if (totalTurns <= 0 || isNaN(totalTurns)) {
+        console.log('Lỗi!!! Số lượt trả phải là số nguyên dương.');
+    } else {
+        for (let i = 0; i < totalTurns; i++) {
+            let nickName = prompt(`Người thứ ${i + 1} - Nhập tên người trả:`);
+            let bookName = prompt("Nhập tên sách:");
+            let realDays;
+
+            do {
+                realDays = +prompt("Nhập số ngày đã mượn thực tế (Phải là số nguyên >= 1):");
+                if (realDays < 1 || isNaN(realDays)) {
+                    alert("Lỗi: Vui lòng nhập số ngày hợp lệ (số nguyên từ 1 trở lên)!");
+                }
+            } while (realDays < 1 || isNaN(realDays));
+
+            let statusMessage = "";
+
+            if (realDays <= 14) {
+                statusMessage = "Trả đúng hạn";
+            } else if (realDays >= 15 && realDays <= 21) {
+                statusMessage = "Trả muộn nhẹ - Phạt nhắc nhở";
+                countLate++;
+            } else {
+                statusMessage = "Quá hạn nghiêm trọng - Cần ghi biên bản phạt";
+                countLate++;
+            }
+
+            console.log(`Lượt trả thứ ${i + 1}`);
+            console.log(`Tên: ${nickName}`);
+            console.log(`Sách: ${bookName}`);
+            console.log(`Số ngày thực tế: ${realDays}`);
+            console.log(`=> Kết quả: ${statusMessage}`);
+        }
+
+        console.log("Báo cáo tổng kết: ");
+        console.log(`Tổng số lượt trả sách: ${totalTurns}`);
+        console.log(`Số lượt trả muộn (bị phạt): ${countLate}`);
+    }
+</script>
+</body>
+</html>

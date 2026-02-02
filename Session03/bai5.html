@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 5</title>
+</head>
+<body>
+<script>
+    let totalBooks = 0;
+    let lostBooks = 0;
+    let outOfStockBooks = 0;
+    let highStockBooks = 0;
+    let normalStockBooks = 0;
+
+    while (true) {
+        let input = prompt("Tiếp tục kiểm kê sách tiếp theo? (có/không)");
+        
+        if (input === null || input.toLowerCase() !== "có") {
+            break;
+        }
+
+        let bookCode;
+        do {
+            bookCode = prompt("Nhập Mã sách (không được để trống):");
+        } while (!bookCode || bookCode.trim() === "");
+
+        let bookName = prompt("Nhập Tên sách:");
+        
+        let quantity;
+        do {
+            quantity = +prompt("Số lượng thực tế (nhập số nguyên >= 0):");
+        } while (quantity < 0 || isNaN(quantity));
+
+        let status;
+        do {
+            status = +prompt("Tình trạng sách (1 - Bình thường, 2 - Mất):");
+        } while (status !== 1 && status !== 2);
+
+        totalBooks++;
+        let resultType = "";
+
+        if (status === 2) {
+            lostBooks++;
+            resultType = "Sách mất";
+        } else if (status === 1 && quantity === 0) {
+            outOfStockBooks++;
+            resultType = "Sách hết (vẫn còn trong hệ thống)";
+        } else if (status === 1 && quantity >= 10) {
+            highStockBooks++;
+            resultType = "Sách tồn kho nhiều";
+        } else {
+            normalStockBooks++;
+            resultType = "Sách tồn kho bình thường";
+        }
+
+        console.log(`Đã ghi nhận: [${bookCode}] ${bookName}`);
+        console.log(`Phân loại: ${resultType}`);
+    }
+
+    console.log("Thống kê:");
+    console.log(`Tổng số sách đã kiểm kê: ${totalBooks} cuốn`);
+    console.log(`Số sách mất: ${lostBooks} cuốn`);
+    console.log(`Số sách hết hàng: ${outOfStockBooks} cuốn`);
+    console.log(`(Sách tồn nhiều: ${highStockBooks} | Tồn bình thường: ${normalStockBooks})`);
+</script>
+</body>
+</html>

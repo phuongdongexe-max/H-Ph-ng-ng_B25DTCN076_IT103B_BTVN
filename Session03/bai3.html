@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 3</title>
+</head>
+<body>
+<script>
+    let successCount = 0;
+    let failCount = 0;
+
+    while (true) {
+        let answer = prompt("Có yêu cầu gia hạn mới không? (có/không)").toLowerCase();
+
+        if (answer !== "có") {
+            break;
+        }
+
+        let readerName = prompt("Nhập tên bạn đọc:");
+        let bookName = prompt("Nhập tên sách:");
+        let currentDays;
+        let addDays;
+
+        do {
+            currentDays = +prompt("Số ngày đã mượn hiện tại (nhập số nguyên >= 1):");
+        } while (currentDays < 1 || isNaN(currentDays));
+
+        do {
+            addDays = +prompt("Số ngày muốn gia hạn thêm (nhập số nguyên >= 1):");
+        } while (addDays < 1 || isNaN(addDays));
+
+        let totalDays = currentDays + addDays;
+        let message = "";
+        let isSuccess = false;
+
+        if (totalDays > 60) {
+            message = "Không được gia hạn: Tổng thời gian vượt quá 60 ngày tối đa";
+            isSuccess = false;
+        } else if (currentDays > 45) {
+            message = "Không được gia hạn: Đã mượn quá lâu (>45 ngày)";
+            isSuccess = false;
+        } else {
+            message = "Gia hạn thành công";
+            isSuccess = true;
+        }
+
+        if (isSuccess) {
+            successCount++;
+        } else {
+            failCount++;
+        }
+
+        console.log("Báo cáo");
+        console.log(`Bạn đọc: ${readerName}`);
+        console.log(`Sách: ${bookName}`);
+        console.log(`Đã mượn: ${currentDays} ngày | Muốn thêm: ${addDays} ngày`);
+        console.log(`Tổng thời gian dự kiến: ${totalDays} ngày`);
+        console.log(`Kết luận: ${message}`);
+    }
+
+    console.log("Kết quả:");
+    console.log(`Số lần gia hạn thành công: ${successCount}`);
+    console.log(`Số lần gia hạn không thành công: ${failCount}`);
+</script>
+</body>
+</html>

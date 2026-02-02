@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo trên lớp</title>
+</head>
+<body>
+    <script>
+        // Chức năng đăng nhập
+    let count = 0;
+    do {
+        let password = prompt("Mời bạn nhập mật khẩu: ");
+    
+         if(password !="admin123"){
+            console.log("Mật khẩu sai, vui lòng nhập lại!!!");
+            count++;
+        } else {
+            console.log("Đăng nhập thành công!!!");      
+            }   continue;
+            
+    }  while (count == 3){
+            console.log("Tài khoản của bạn đã bị khóa!!!");
+        
+    }
+    
+    
+    
+
+    </script>
+</body>
+</html>
