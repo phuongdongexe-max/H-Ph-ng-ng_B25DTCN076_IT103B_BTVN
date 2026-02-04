@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Câu 2</title>
+</head>
+<body>
+    <script>
+        let cash = [100, 200, 300, 400];
+        for (i = 0; i < cash.length; i++){
+            console.log(`Giá trị thứ ${i}(index) là: ` , cash[i]);
+        }
+
+        let total;
+        for (i = 0; i<cash.length; i++){
+            if ( i % 2 == 0 ){
+                total = total + cash[i];
+            }
+        }
+        console.log("Tổng tiền: ", total);
+    </script>
+</body>
+</html>
+
