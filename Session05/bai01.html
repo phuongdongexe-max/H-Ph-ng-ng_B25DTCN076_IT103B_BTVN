@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 01</title>
+</head>
+<body>
+    <script>
+        let listBook = [];
+        let size = +prompt("Nhập số lượng sách được trả: ");
+        if (size <= 0){
+            console.log("Giá trị lỗi!!!");
+        } else {
+            for (i = 0; i < size; i++){
+                listBook[i] = prompt("Nhập tên sách được trả thứ " + [i + 1]);
+            }
+            console.log("Danh sách sách trả lại:\n");
+            for (i = 0; i < size; i++){
+                console.log(i + 1 + ".",listBook[i]);
+            }
+            
+        }
+    </script>
+</body>
+</html>

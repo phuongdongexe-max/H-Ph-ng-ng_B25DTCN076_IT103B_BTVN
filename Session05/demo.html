@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo</title>
+</head>
+<body>
+    <script>
+        let myArray = [];
+        // Nhập các phần tử vào trong mảng
+        for (i=0; i<3; i++){
+            myArray[i] = prompt(`Nhập phần tử thứ ${i + 1}`);
+        }
+
+        // In các phần tử có trong mảng
+        for (i=0; i<myArray.length; i++){
+            console.log(myArray[i]);
+        }
+
+        // CRUD (tạo, thêm, sửa, xóa)
+        let array = [];
+
+        // Thêm vào đầu mảng
+        array.unshift(1,2,3);
+        array.unshift(0);
+
+        // Thêm vào cuối mảng
+        array.push(4,5,6);
+        array.push(7,8,9);
+
+        // Cập nhật phần tử
+        array[2] = "Giá trị mới";
+
+        // Xóa ở đầu mảng
+        array.shift();
+
+        // Xóa ở cuối mảng
+        array.pop();
+
+        // Xóa hoặc/và thêm nhiều phần tử
+        array.splice();
+
+        // Một số phương thức trong Array
+        let a1 = [1,2,3];
+        let a2 = [4,5,6];
+        a1 = a1.concat(a2);
+        console.log(a1);
+
+        let subA = a1.slice(0, 2);
+        console.log(subA);
+        //Tìm chỉ số của phần tử đó
+        //Nếu phần tử chưa tồn tại trong mảng đó thì chỉ số index của nó sẽ bằng -1
+        console.log(a1.indexOf(3));
+
+        // Một số phương thức đặc biệt
+        let change = a1.map((element, index) => "elementz");
+        console.log(change);
+
+        // In ra màn hình console
+        console.log(myArray);
+        console.log(array);
+
+        // Vòng lặp nâng cao để duyệt mảng
+        let proArray = [1,2,3,4,5]
+        // Duyệt qua chỉ số
+        for (const index in proArray) {
+            console.log(index);
+        }
+        // Duyệt qua giá trị
+        for (const element of proArray) {
+            console.log(element);
+        }
+    </script>
+</body>
+</html>

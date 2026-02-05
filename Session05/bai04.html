@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 04</title>
+</head>
+<body>
+    <script>
+        let booksId = [];
+        let booksName = [];
+        let bookStatus = [];
+
+        let inputCount = prompt("Có bao nhiêu cuốn sách cần kiểm tra tình trạng hôm nay?");
+        let n = Number(inputCount);
+
+        for (let i = 0; i < n; i++) {
+            let id = prompt(`Sách thứ ${i + 1}: Nhập Mã sách (không để trống):`);
+            let name = prompt(`Sách thứ ${i + 1}: Nhập Tên sách (không để trống):`);
+            
+            let statusChoice = prompt(`Sách thứ ${i + 1}: Nhập tình trạng (1: Hỏng nhẹ, 2: Hỏng nặng, 3: Cần sửa gấp):`);
+            
+            let statusText = "";
+            if (statusChoice === "1") {
+                statusText = "Hỏng nhẹ";
+            } else if (statusChoice === "2") {
+                statusText = "Hỏng nặng";
+            } else if (statusChoice === "3") {
+                statusText = "Cần sửa gấp";
+            } else {
+                statusText = "Chưa xác định"; 
+            }
+
+            booksId.push(id);
+            booksName.push(name);
+            bookStatus.push(statusText);
+        }
+
+        console.clear();
+        console.log(`Danh sách hiện tại (${booksId.length} cuốn):`);
+
+        for (let i = 0; i < booksId.length; i++) {
+            console.log(`${i + 1}. ${booksId[i]} - ${booksName[i]} - ${bookStatus[i]}`);
+        }
+    </script>
+</body>
+</html>

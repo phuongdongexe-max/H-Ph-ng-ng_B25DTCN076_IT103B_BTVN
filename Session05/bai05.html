@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý Thư viện Đa thể loại</title>
+</head>
+<body>
+    <script>
+        let booksId = [];
+        let booksName = [];
+        let booksCategory = [];
+        let inventoryQuantity = [];
+
+        let inputCount = prompt("Có bao nhiêu loại sách cần nhập thông tin hôm nay?");
+        let n = Number(inputCount);
+
+        for (let i = 0; i < n; i++) {
+            console.log(`--- Nhập sách thứ ${i + 1} ---`);
+
+            let id;
+            while (true) {
+                id = prompt(`Nhập mã sách thứ ${i + 1}:`);
+                if (id === "") {
+                    alert("Mã sách không được để trống!");
+                    continue;
+                }
+                if (booksId.includes(id)) {
+                    alert(`Mã sách "${id}" đã tồn tại! Vui lòng nhập mã khác.`);
+                } else {
+                    break;
+                }
+            }
+
+            let name = prompt(`Nhập tên sách thứ ${i + 1}:`);
+            let category = prompt(`Nhập các thể loại của sách thứ ${i + 1} (cách nhau bởi dấu phẩy):`);
+            let qty = Number(prompt(`Nhập số lượng tồn kho của sách thứ ${i + 1}:`));
+
+            booksId.push(id);
+            booksName.push(name);
+            booksCategory.push(category);
+            inventoryQuantity.push(qty);
+        }
+
+        console.clear();
+        console.log("-------------------------------------");
+
+        let countProgramming = 0;
+        for (let i = 0; i < n; i++) {
+            let catsLower = booksCategory[i].toLowerCase();
+            if (catsLower.includes("lập trình")) {
+                countProgramming++;
+            }
+        }
+        console.log(`Tổng số sách thuộc thể loại 'Lập trình': ${countProgramming}`);
+
+        console.log("Danh sách mã sách thuộc cả hai thể loại 'JavaScript' và 'Web':");
+        for (let i = 0; i < n; i++) {
+            let catsLower = booksCategory[i].toLowerCase();
+            if (catsLower.includes("javascript") && catsLower.includes("web")) {
+                console.log(booksId[i]);
+            }
+        }
+
+        if (n > 0) {
+            let minIndex = 0;
+            
+            for (let i = 1; i < n; i++) {
+                if (inventoryQuantity[i] < inventoryQuantity[minIndex]) {
+                    minIndex = i;
+                }
+            }
+
+            console.log("Loại sách có số lượng tồn kho thấp nhất:");
+            console.log(`Mã sách: ${booksId[minIndex]}, Tên sách: ${booksName[minIndex]}, Tồn kho: ${inventoryQuantity[minIndex]}`);
+        }
+    </script>
+</body>
+</html>

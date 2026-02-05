@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bài 02</title>
+</head>
+<body>
+    <script>
+        let listBook = [];
+        let size = +prompt("hôm nay có bao nhiêu cuốn sách bị trả muộn???: ");
+        if (size < 0){
+            console.log("Giá trị lỗi!!!");
+        } else {
+            for (i = 0; i < size; i++){
+                listBook[i] = prompt("Cuốn sách bị trả muộn thứ " + [i + 1]);
+            }
+
+            console.log("Danh sách sách trả muộn:\n");
+            for (i = 0; i < size; i++){
+                console.log(i + 1 + ".",listBook[i]);
+            }
+        }
+    </script>
+</body>
+</html>
