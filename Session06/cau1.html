@@ -1,32 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Câu 1</title>
+    <title>Bài 1: Xử lý mảng Students</title>
 </head>
 <body>
     <script>
-        let nickName = ['Quý ' , 'Lan ' , 'Nam ' , 'Hùng ' , 'Nam '];
-        let students = [];
-        students = students.concat(nickName);
-        let reverse = [];
-        reverse = students.reverse();
+        let str = "Quý, Nam, Lan, Hùng, Nam";
+        let students = str.split(", ");
         
-        for (i = 0; i < nickName.length; i++){
-            if (nickName[i].trim() == 'Lan'){
-                console.log("Tên Lan có tồn tại trong mảng");
-                break;
-            } else {
-                console.log("Tên Lan không tồn tại trong mảng");
-            }
+        students.reverse();
+
+        if (students.includes("Lan")) {
+            console.log("Tên Lan tồn tại trong mảng");
+        } else {
+            console.log("Tên Lan không tồn tại trong mảng");
         }
-        
-        for (i = 0; i < nickName.length; i++){
-            if (nickName[i] == 'Nam'){
-                console.log(` Tên Nam tồn tại ở vị trí  thứ ${i + 1} trong mảng`);
-            }
-        }
+
+        let indexNam = students.indexOf("Nam");
+        console.log(`Vị trí đầu tiên của tên 'Nam' trong mảng đã đảo ngược là: ${indexNam}`);
     </script>
 </body>
 </html>
