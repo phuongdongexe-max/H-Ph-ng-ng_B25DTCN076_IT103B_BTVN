@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo</title>
+</head>
+<body>
+    <script>
+        // Khởi tạo hàm
+        function sayHello (userName){
+            // Code được thực thi khi gọi hàm
+            console.log("Hello,", userName);
+            return userName;
+        }
+
+        // Gọi hàm
+        sayHello();
+        let returnName = sayHello();
+        console.log("Giá trị trả về của hàm là", sayHello());
+
+        // Khởi tạo hàm dùng funcion epression
+        let sayGoodbye = function(){
+            console.log("Goodbye");
+        }
+        sayGoodbye();
+        // Cú pháp arrow funcion
+            // Khai báo không cần funcion
+        let sayBye = () => {
+            console.log("Bye Bye");
+        }
+            // Khái bao trả về giá trị mà không cần reuturn
+        let bye = () => 1;  // Hàm trả về giá trị bằng 1
+        
+    </script>
+</body>
+</html>

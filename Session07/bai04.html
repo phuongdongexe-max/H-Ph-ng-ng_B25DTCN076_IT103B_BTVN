@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 04</title>
+</head>
+<body>
+    <script>
+    let players = [
+    "P001-Nguyễn Văn A-Thủ môn",
+    "P002-Trần Thị B-Hậu vệ",
+    "P003-Lê Văn C-Hậu vệ",
+    "P004-Phạm Văn D-Tiền vệ",
+    "P005-Hoàng Thị E-Tiền đạo",
+    "P006-Vũ Minh F-Tiền đạo",
+    "P007-Đặng Văn G-Thủ môn"
+];
+
+// a. In toàn bộ danh sách cầu thủ theo định dạng
+function printTeamRoster() {
+    console.log("--- DANH SÁCH ĐỘI BÓNG ---");
+    for (let i = 0; i < players.length; i++) {
+        let parts = players[i].split("-");
+        let id = parts[0];
+        let name = parts[1];
+        let position = parts[2];
+        console.log(`${i + 1}. ${id} | ${name} | ${position}`);
+    }
+}
+
+// b. Trả về số lượng các cầu thủ theo vị trí
+function countPlayerByPostion(playersArr) {
+    let counts = {};
+    
+    for (let i = 0; i < playersArr.length; i++) {
+        let position = playersArr[i].split("-")[2];
+        
+        if (counts[position]) {
+            counts[position]++;
+        } else {
+            counts[position] = 1;
+        }
+    }
+    return counts;
+}
+
+// d. Kiểm tra đội có ít nhất 1 thủ môn hay không
+function hasGoalkeeper() {
+    for (let i = 0; i < players.length; i++) {
+        let position = players[i].split("-")[2];
+        if (position === "Thủ môn") {
+            return true;
+        }
+    }
+    return false;
+}
+
+// 1. In danh sách
+printTeamRoster();
+
+// 2. Thống kê số lượng theo vị trí
+console.log("\n--- THỐNG KÊ VỊ TRÍ ---");
+let stats = countPlayerByPostion(players);
+for (let pos in stats) {
+    console.log(`${pos}: ${stats[pos]}`);
+}
+
+// 3. Kiểm tra thủ môn
+console.log("\nKiểm tra thủ môn");
+console.log("Đội có thủ môn không?", hasGoalkeeper() ? "Có" : "Không");
+    </script>
+</body>
+</html>

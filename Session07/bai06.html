@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 06</title>
+</head>
+<body>
+    <script>
+    let players = [
+    "P001-Nguyễn Văn A-Thủ môn",
+    "P002-Trần Thị B-Hậu vệ",
+    "P003-Lê Văn C-Hậu vệ",
+    "P004-Phạm Văn D-Tiền vệ",
+    "P005-Hoàng Thị E-Tiền đạo",
+    "P006-Vũ Minh F-Tiền đạo",
+    "P007-Đặng Văn G-Thủ môn"
+];
+
+// a. Trả về tên của cầu thủ có tên ngắn nhất
+function getShortestPlayerName() {
+    if (players.length === 0) return null;
+
+    // Lấy tên của cầu thủ đầu tiên làm mốc so sánh
+    let shortestName = players[0].split("-")[1];
+
+    for (let i = 1; i < players.length; i++) {
+        let currentName = players[i].split("-")[1];
+        // Nếu tên hiện tại ngắn hơn hẳn tên ngắn nhất đang giữ
+        if (currentName.length < shortestName.length) {
+            shortestName = currentName;
+        }
+    }
+    return shortestName;
+}
+
+// b. Trả về số lượng cầu thủ có tên vị trí dài hơn độ dài được truyền vào
+function countPlayersWithPositionLengthGreaterThan(length) {
+    let count = 0;
+    
+    for (let i = 0; i < players.length; i++) {
+        let position = players[i].split("-")[2];
+        // So sánh độ dài chuỗi vị trí với tham số length
+        if (position.length > length) {
+            count++;
+        }
+    }
+    return count;
+}
+
+// Yêu cầu a
+let shortest = getShortestPlayerName();
+console.log("Cầu thủ có tên ngắn nhất là: " + shortest);
+
+// Yêu cầu b
+let inputLength = 7; 
+let resultCount = countPlayersWithPositionLengthGreaterThan(inputLength);
+console.log(`Số lượng cầu thủ có tên vị trí dài hơn ${inputLength} ký tự: ${resultCount}`);
+    </script>
+</body>
+</html>

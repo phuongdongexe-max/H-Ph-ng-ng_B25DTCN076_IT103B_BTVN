@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 05</title>
+</head>
+<body>
+    <script>
+    let players = [
+    "P001-Nguyễn Văn A-Thủ môn",
+    "P002-Trần Thị B-Hậu vệ",
+    "P003-Lê Văn C-Hậu vệ",
+    "P004-Phạm Văn D-Tiền vệ",
+    "P005-Hoàng Thị E-Tiền đạo",
+    "P006-Vũ Minh F-Tiền đạo",
+    "P007-Đặng Văn G-Thủ môn"
+];
+
+// a. Trả về mảng chứa tất cả các vị trí duy nhất (không trùng lặp)
+function getAllPositions() {
+    let positions = [];
+    for (let i = 0; i < players.length; i++) {
+        let position = players[i].split("-")[2];
+        if (!positions.includes(position)) {
+            positions.push(position);
+        }
+    }
+    return positions;
+}
+
+// b. Trả về tên cầu thủ có tên dài nhất
+function findPlayersWithLongestName() {
+    let longestName = "";
+    for (let i = 0; i < players.length; i++) {
+        let name = players[i].split("-")[1];
+        if (name.length > longestName.length) {
+            longestName = name;
+        }
+    }
+    return longestName;
+}
+
+// c. Đếm số lượng cầu thủ có tên bắt đầu bằng chữ cái truyền vào
+function countPlayersStartingWithLetter(letter) {
+    let count = 0;
+    let searchLetter = letter.toLowerCase();
+    
+    for (let i = 0; i < players.length; i++) {
+        let name = players[i].split("-")[1];
+        // Lấy chữ cái đầu tiên của tên và chuyển về chữ thường để so sánh
+        if (name.charAt(0).toLowerCase() === searchLetter) {
+            count++;
+        }
+    }
+    return count;
+}
+
+console.log("1. Danh sách các vị trí duy nhất:");
+console.log(getAllPositions());
+
+console.log("\n2. Cầu thủ có tên dài nhất:");
+console.log(findPlayersWithLongestName());
+
+let checkLetter = "N";
+console.log(`\n3. Số lượng cầu thủ có tên bắt đầu bằng chữ '${checkLetter}':`);
+console.log(countPlayersStartingWithLetter(checkLetter));
+    </script>
+</body>
+</html>

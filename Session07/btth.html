@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản Lý Đội Bóng</title>
+</head>
+<body>
+<h1>Phương Đông</h1>
+
+    <script>
+        // 1. Khởi tạo 2 Mảng
+        let players = []; // Lưu tên cầu thủ
+        let goals = [];   // Lưu số bàn thắng
+
+        // 2. Hàm addPlayer(name, goal)
+        function addPlayer(name, goal) {
+            players.push(name);
+            goals.push(Number(goal)); // Chuyển đổi string sang number
+            console.log(`Đã thêm cầu thủ ${name} thành công.`);
+            alert(`=> Đã thêm ${name} thành công.`);
+        }
+
+        // 3. Hàm showSquad()
+        function showSquad() {
+            let output = "--- DANH SÁCH ĐỘI HÌNH ---\n";
+            
+            if (players.length === 0) {
+                return "Danh sách trống!";
+            }
+
+            for (let i = 0; i < players.length; i++) {
+                // i+1 để hiển thị số thứ tự bắt đầu từ 1
+                output += `${i + 1}. ${players[i]} - ${goals[i]} bàn\n`;
+            }
+            return output;
+        }
+
+        // 4. Hàm getTotalGoals()
+        const getTotalGoals = function() {
+            let sum = 0;
+            for (let i = 0; i < goals.length; i++) {
+                sum += goals[i];
+            }
+            return sum;
+        };
+
+        // 5. Hàm findMostGoals(goalsArray)
+        function findMostGoals(goalsArray) {
+            if (goalsArray.length === 0) return 0;
+            
+            let maxGoals = goalsArray[0];
+            for (let i = 1; i < goalsArray.length; i++) {
+                if (goalsArray[i] > maxGoals) {
+                    maxGoals = goalsArray[i];
+                }
+            }
+            return maxGoals;
+        }
+
+        function main() {
+            let isRunning = true;
+
+            while (isRunning) {
+                // Tạo menu hiển thị giống hình ảnh yêu cầu
+                let choice = prompt(
+                    "MENU QUẢN LÝ ĐỘI BÓNG:\n" +
+                    "1. Nhập cầu thủ\n" +
+                    "2. Xem danh sách\n" +
+                    "3. Tổng bàn thắng\n" +
+                    "4. Xem Vua phá lưới\n" +
+                    "0. Thoát"
+                );
+
+                switch (choice) {
+                    case "1": // Nhập cầu thủ
+                        let nameInput = prompt("Nhập tên cầu thủ:");
+                        let goalInput = prompt("Nhập số bàn thắng:");
+                        
+                        // Kiểm tra nếu người dùng không bấm Cancel
+                        if (nameInput && goalInput !== null) {
+                            addPlayer(nameInput, goalInput);
+                        }
+                        break;
+
+                    case "2": // Xem danh sách
+                        alert(showSquad());
+                        break;
+
+                    case "3": // Tổng bàn thắng
+                        let total = getTotalGoals();
+                        alert(`=> Tổng số bàn thắng của cả đội là: ${total} bàn.`);
+                        break;
+
+                    case "4": // Tìm Vua phá lưới (Có xử lý phần Nâng cao)
+                        if (goals.length === 0) {
+                            alert("Chưa có dữ liệu cầu thủ.");
+                        } else {
+                            // Gọi hàm tìm số bàn thắng cao nhất
+                            let maxVal = findMostGoals(goals);
+                            let bestPlayers = [];
+                            for(let i = 0; i < goals.length; i++){
+                                if(goals[i] === maxVal){
+                                    bestPlayers.push(players[i]);
+                                }
+                            }
+                            
+                            alert(
+                                `=> Vua phá lưới hiện tại ghi được: ${maxVal} bàn.\n` +
+                                `=> Cầu thủ: ${bestPlayers.join(", ")}`
+                            );
+                        }
+                        break;
+
+                    case "0": // Thoát
+                    case null: // Trường hợp bấm nút Cancel
+                        isRunning = false;
+                        alert("Đã thoát chương trình.");
+                        break;
+
+                    default:
+                        alert("Lựa chọn không hợp lệ. Vui lòng thử lại.");
+                }
+            }
+        }
+
+        main();
+    </script>
+</body>
+</html>

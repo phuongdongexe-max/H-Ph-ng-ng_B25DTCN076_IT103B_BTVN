@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 03</title>
+</head>
+<body>
+    <script>
+        let players = [];
+        const positionNames = ["", "Thủ môn", "Hậu vệ", "Tiền vệ", "Tiền đạo"];
+
+function main() {
+    let n = parseInt(prompt("Có bao nhiêu cầu thủ cần nhập vào đội bóng?"));
+    while (isNaN(n) || n <= 0) {
+        n = parseInt(prompt("Vui lòng nhập một số nguyên dương:"));
+    }
+
+    for (let i = 0; i < n; i++) {
+        console.log(`Nhập cầu thủ ${i + 1}:`);
+        
+        // 1. Nhập mã cầu thủ và kiểm tra trùng
+        let id;
+        while (true) {
+            id = prompt(`Nhập mã cầu thủ ${i + 1}:`).trim();
+            let isDuplicate = false;
+            for (let j = 0; j < players.length; j++) {
+                if (players[j].split("-")[0] === id) {
+                    isDuplicate = true;
+                    break;
+                }
+            }
+            if (id === "") {
+                alert("Mã cầu thủ không được để trống!");
+            } else if (isDuplicate) {
+                alert("Mã cầu thủ đã tồn tại! Vui lòng nhập mã khác.");
+            } else {
+                break;
+            }
+        }
+
+        // 2. Nhập tên cầu thủ
+        let name;
+        while (true) {
+            name = prompt(`Nhập tên cầu thủ cho mã ${id}:`).trim();
+            if (name !== "") break;
+            alert("Tên cầu thủ không được để trống!");
+        }
+
+        // 3. Nhập vị trí
+        let posChoice;
+        while (true) {
+            posChoice = parseInt(prompt("Vị trí (1: Thủ môn, 2: Hậu vệ, 3: Tiền vệ, 4: Tiền đạo):"));
+            if (posChoice >= 1 && posChoice <= 4) break;
+            alert("Vui lòng chọn từ 1 đến 4.");
+        }
+
+        // 4. Ghép chuỗi và thêm vào mảng
+        let playerInfo = `${id}-${name}-${positionNames[posChoice]}`;
+        players.push(playerInfo);
+    }
+
+    // Thực hiện in danh sách
+    printTeamRoster();
+}
+
+// a. In danh sách
+function printTeamRoster() {
+    console.log(`\n--- DANH SÁCH ĐỘI BÓNG HIỆN TẠI (${players.length} cầu thủ) ---`);
+    for (let i = 0; i < players.length; i++) {
+        let details = players[i].split("-");
+        let id = details[0];
+        let name = details[1];
+        let pos = details[2];
+        console.log(`${i + 1}. Mã: ${id} | Tên: ${name} | Vị trí: ${pos}`);
+    }
+}
+
+// b. Thêm cầu thủ vào danh sách
+function pushPlayer(id, name, position) {
+    let info = `${id}-${name}-${position}`;
+    players.push(info);
+}
+
+// Chạy chương trình
+main();
+    </script>
+</body>
+</html>
