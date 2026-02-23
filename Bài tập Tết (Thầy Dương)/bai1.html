@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 1</title>
+</head>
+<body>
+    <script>
+        let num = +prompt("Nhập số bất kì cần kiểm tra:");
+        if (typeof num === 'number' && !isNaN(num)){
+            if(num % 2 == 0){
+            console.log("Đây là số chẵn.");
+            } else {
+            console.log("Đây là số lẻ.");
+            }
+        } else {
+            console.log("Dữ liệu bạn đã nhập không phải là số.");
+        }
+        
+    </script>
+</body>
+</html>
