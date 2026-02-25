@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài kiểm tra 30 phút đầu giờ</title>
+</head>
+<body>
+    <script>
+        let order = ['Đơn hàng A','Đơn hàng B','Đơn hàng C','Đơn hàng D','Đơn hàng E'];
+        let revenues = [1500, 2800, 1200, -500, 3200];
+
+        let orderReports;
+        for (let i = 0; i < order.length; i++ ) {
+            console.log(`Đơn hàng ${order[i]} mang về ${revenues[i]}`);
+        }
+
+        let total = 0;
+        for (let i = 0; i < revenues.length; i++){
+            if (revenues[i] > 0){
+                total = total + revenues[i];
+            }
+        }
+
+        console.log(`Tổng doanh thu đơn hàng hợp lệ ${total}`);
+
+    </script>
+</body>
+</html>
