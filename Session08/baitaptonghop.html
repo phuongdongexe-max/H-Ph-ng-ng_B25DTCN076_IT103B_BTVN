@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài tập tổng hợp</title>
+</head>
+
+<body>
+    <script>
+        const squad = [
+            ["Nguyen Van A", 10, "FW"],
+            ["Tran Van B", 5, "MF"],
+            ["Le Van C", 2, "DF"],
+            ["Pham Van D", 12, "FW"],
+            ["Hoang Van E", 0, "GK"],
+            ["Dang Van F", 7, "MF"]
+        ];
+
+        function startApp() {
+            let choice;
+            do {
+                choice = prompt(
+                    "=== FOOTBALL ANALYTICS MENU ===\n" +
+                    "1. Xem danh sách\n" +
+                    "2. Tìm kiếm\n" +
+                    "3. Lọc theo vị trí\n" +
+                    "4. Tổng bàn thắng\n" +
+                    "5. Kiểm tra hiệu suất\n" +
+                    "0. Thoát\n\n" +
+                    "Nhập lựa chọn của bạn:"
+                );
+
+                switch (choice) {
+                    case "1":
+                        showSquad();
+                        break;
+                    case "2":
+                        searchPlayer();
+                        break;
+                    case "3":
+                        filterByPosition();
+                        break;
+                    case "4":
+                        sumGoals();
+                        break;
+                    case "5":
+                        checkPerformance();
+                        break;
+                    case "0":
+                        alert("Hẹn gặp lại!");
+                        break;
+                    default:
+                        if (choice !== null) alert("Lựa chọn không hợp lệ!");
+                }
+            } while (choice !== "0" && choice !== null);
+        }
+
+        // --- CÁC HÀM XỬ LÝ DỮ LIỆU ---
+
+        // Chức năng 1: Xem danh sách (Sử dụng map)
+        function showSquad() {
+            const list = squad.map(p => `${p[0]} (${p[2]}): ${p[1]} bàn thắng`).join("\n");
+            alert("--- DANH SÁCH ĐỘI BÓNG ---\n" + list);
+        }
+
+        // Chức năng 2: Tìm kiếm cầu thủ (Sử dụng find)
+        function searchPlayer() {
+            const nameToFind = prompt("Nhập tên cầu thủ cần tìm:");
+            const player = squad.find(p => p[0].toLowerCase().includes(nameToFind.toLowerCase()));
+
+            if (player) {
+                alert(`Tìm thấy: ${player[0]} - Vị trí: ${player[2]} - Bàn thắng: ${player[1]}`);
+            } else {
+                alert("Không tìm thấy cầu thủ này trong danh sách.");
+            }
+        }
+
+        // Chức năng 3: Lọc cầu thủ theo vị trí (Sử dụng filter)
+        function filterByPosition() {
+            const pos = prompt("Nhập vị trí muốn lọc (FW/MF/DF/GK):").toUpperCase();
+            const filtered = squad.filter(p => p[2] === pos);
+
+            if (filtered.length > 0) {
+                const result = filtered.map(p => `- ${p[0]} (${p[1]} bàn)`).join("\n");
+                alert(`=> KẾT QUẢ LỌC VỊ TRÍ ${pos}:\n` + result);
+            } else {
+                alert(`Không có cầu thủ nào ở vị trí ${pos}`);
+            }
+        }
+
+        // Chức năng 4: Tổng bàn thắng (Sử dụng reduce)
+        function sumGoals() {
+            const total = squad.reduce((sum, p) => sum + p[1], 0);
+            alert(`=> Tổng số bàn thắng toàn đội: ${total} bàn`);
+        }
+
+        // Chức năng 5: Kiểm tra hiệu suất (Sử dụng some và every)
+        function checkPerformance() {
+            const hasZeroGoal = squad.some(p => p[1] === 0);
+            const allScored = squad.every(p => p[1] > 0);
+
+            let msg = "";
+            if (hasZeroGoal) msg += "- Có cầu thủ chưa ghi bàn.\n";
+            if (allScored) msg += "- Tất cả cầu thủ đều đã ghi bàn.\n";
+            else msg += "- Không phải tất cả cầu thủ đều đã ghi bàn.";
+
+            alert("--- KIỂM TRA HIỆU SUẤT ---\n" + msg);
+        }
+
+        // Chạy chương trình
+        startApp();
+    </script>
+</body>
+
+</html>

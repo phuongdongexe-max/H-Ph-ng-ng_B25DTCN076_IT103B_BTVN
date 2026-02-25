@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 04</title>
+</head>
+
+<body>
+    <script>
+        // . Mảng dữ liệu đầu vào
+        const players = [
+            "Messi - Forward - 25",
+            "Ronaldo - Forward - 30",
+            "Neymar - Forward - 18",
+            "De Bruyne - Midfielder - 8",
+            "Kante - Midfielder - 2",
+            "Van Dijk - Defender - 5",
+            "Alisson - Goalkeeper - 0",
+        ];
+
+        // . Viết hàm getReversedNames
+        const getReversedNames = (list) => {
+            // Nối trực tiếp .reverse() ngay sau .map()
+            return list.map((player) => player.split(" - ")[0]).reverse();
+        };
+
+       
+        //  Kiểm tra kết quả
+        console.log(getReversedNames(players));
+    </script>
+</body>
+
+</html>

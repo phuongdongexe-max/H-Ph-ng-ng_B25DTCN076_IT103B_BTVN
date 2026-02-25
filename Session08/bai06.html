@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 06</title>
+</head>
+
+<body>
+    <script>
+        function reportByPosition(players) {
+            const summaryArray = [];
+
+            // Duyệt qua từng chuỗi cầu thủ
+            for (let playerStr of players) {
+                const parts = playerStr.split(" - ");
+                const position = parts[1].trim();
+                const goals = parseInt(parts[2]);
+                const assists = parseInt(parts[3]);
+                const matches = parseInt(parts[4]);
+
+                let foundIndex = -1;
+                for (let i = 0; i < summaryArray.length; i++) {
+                    if (summaryArray[i][0] === position) {
+                        foundIndex = i;
+                        break;
+                    }
+                }
+
+                if (foundIndex === -1) {
+                    summaryArray.push([position, 1, goals, assists, matches]);
+                } else {
+                    summaryArray[foundIndex][1] += 1;       // số lượng
+                    summaryArray[foundIndex][2] += goals;   // bàn thắng
+                    summaryArray[foundIndex][3] += assists; // kiến tạo
+                    summaryArray[foundIndex][4] += matches; // trận
+                }
+            }
+
+            summaryArray.forEach(item => {
+                const [pos, count, totalG, totalA, totalM] = item;
+
+                const performance = ((totalG + totalA) / totalM).toFixed(2);
+
+                console.log(`Vị trí: ${pos}`);
+                console.log(`- Số lượng cầu thủ: ${count}`);
+                console.log(`- Tổng bàn thắng: ${totalG}`);
+                console.log(`- Tổng kiến tạo: ${totalA}`);
+                console.log(`- Tổng số trận: ${totalM}`);
+                console.log(`- Trung bình hiệu suất mỗi trận: ${performance}`);
+                console.log("--------------------------");
+            });
+        }
+
+        reportByPosition(players);
+    </script>
+</body>
+
+</html>

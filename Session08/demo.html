@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo</title>
+</head>
+<body>
+    <script>
+        // ForEach
+        let name = ['An', 'Dương', 'Đức', 'Hai', 'Hải'];
+        let scores = [5,6,7,8,9];
+
+        let returnValue = name.forEach((value, index, arr) => {
+            console.log(value);
+            console.log(index);
+            console.log(arr);
+        });
+
+        // Map
+        let newScore = scores.map(value => value * 2);
+        console.log(newScore);
+
+        // Filter
+        let goodScore = scores.filter(value => value > 6);
+        console.log(goodScore);
+
+        // Find & FindIndex
+        let findStudent = name.find(value => value === 'Dương');
+        console.log(findStudent);
+        
+        let findStudentIndex = name.findIndex(value => value === 'Dương');
+        console.log(findStudentIndex);
+
+        // Reduce
+        let totalScore = scores.reduce((accumulative, value, index, arr) => {
+            accumulative += value;
+            return accumulative;
+        }, 0);
+            // Số 0 là giá trị khởi tạo ban đầu
+            // Có '0' -> Cộng các giá trị từ số 5
+            // Không có '0' -> Cộng các giá trị từ số sau số 5 (số 6)
+        console.log(accumulative);
+    </script>
+</body>
+</html>

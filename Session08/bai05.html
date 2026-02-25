@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 05</title>
+</head>
+
+<body>
+    <script>
+        // 1. Dữ liệu đầu vào
+        const players = [
+            "Messi - Forward - 25 - 15",
+            "Ronaldo - Forward - 30 - 10",
+            "Neymar - Forward - 18 - 20",
+            "De Bruyne - Midfielder - 8 - 25",
+            "Kante - Midfielder - 2 - 5",
+            "Van Dijk - Defender - 5 - 3",
+            "Alisson - Goalkeeper - 0 - 1",
+        ];
+
+        // 2. Hàm xử lý
+        function reportTopPerformers(minPerformance, playersList) {
+            const totalPerformance = playersList.map(function (playerStr) {
+                    const parts = playerStr.split(" - ");
+                    const name = parts[0];
+                    const goals = parseInt(parts[2]);   // Chuyển chuỗi thành số
+                    const assists = parseInt(parts[3]); // Chuyển chuỗi thành số
+                    const score = goals + assists;      // Tính hiệu suất
+
+                    return { name: name, score: score };
+                }).filter(function (playerObj) {
+                    return playerObj.score >= minPerformance;
+                }).map(function (playerObj) {
+                    // In ra dòng báo cáo cá nhân
+                    console.log(playerObj.name + ": " + playerObj.score);
+                    // Chỉ trả về điểm số để bước sau cộng dồn
+                    return playerObj.score;
+                }).reduce(function (total, currentScore) {
+                    return total + currentScore;
+                }, 0); // Số 0 là giá trị khởi tạo ban đầu của tổng
+
+            console.log("Tổng hiệu suất: " + totalPerformance);
+            return totalPerformance;
+        }
+
+        reportTopPerformers(30, players);
+        // Giả sử mốc hiệu suất ở 30
+    </script>
+</body>
+
+</html>

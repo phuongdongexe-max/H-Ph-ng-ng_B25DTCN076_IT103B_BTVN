@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 02</title>
+</head>
+
+<body>
+    <script>
+        // Khai báo mảng playerNames theo đề bài
+        const playerNames = [
+            "Messi",
+            "Ronaldo",
+            "Neymar",
+            "De Bruyne",
+            "Kante",
+            "Van Dijk",
+            "Alisson",
+        ];
+
+        // Viết hàm getUpperNames
+        function getUpperNames(names) {
+            // Sử dụng phương thức map để tạo ra mảng mới
+            const upperNames = names.map(function (name) {
+                // Chuyển đổi từng tên thành chữ in hoa và trả về
+                return name.toUpperCase();
+            });
+
+            return upperNames;
+        }
+
+        // Kiểm tra kết quả
+        // Gọi hàm và lưu kết quả vào biến result
+        const result = getUpperNames(playerNames);
+
+        // In kết quả ra để xem
+        console.log(result);
+        console.log(playerNames);
+    </script>
+</body>
+
+</html>

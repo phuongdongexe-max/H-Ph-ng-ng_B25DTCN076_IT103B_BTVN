@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 03</title>
+</head>
+
+<body>
+    <script>
+        // Mảng dữ liệu đầu vào
+        const players = [
+            "Messi - Forward",
+            "Ronaldo - Forward",
+            "Neymar - Forward",
+            "De Bruyne - Midfielder",
+            "Kante - Midfielder",
+            "Van Dijk - Defender",
+            "Alisson - Goalkeeper",
+        ];
+
+        // Viết hàm filterPlayersByPosition
+        function filterPlayersByPosition(position, playersList) {
+            // Sử dụng phương thức filter để lọc ra các phần tử thỏa mãn điều kiện
+            const result = playersList.filter(function (player) {
+                return player.includes(position);
+            });
+
+            // Trả về mảng mới đã được lọc
+            return result;
+        }
+
+        // Kiểm tra thử các trường hợp
+        console.log(filterPlayersByPosition("Forward", players));
+        console.log(filterPlayersByPosition("Midfielder", players));
+        console.log(filterPlayersByPosition("Goalkeeper", players));
+        </script>
+</body>
+
+</html>
