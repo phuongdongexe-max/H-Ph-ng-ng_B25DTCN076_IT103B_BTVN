@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiểm tra 30 phút đầu giờ</title>
+</head>
+<body>
+    <script>
+
+        // Kiểm tra inStock
+        let products = [
+                { id: 'P01', name: 'Laptop Macbook Pro M3', price: 2000, category: 'Laptop', inStock: true },
+                { id: 'P02', name: 'Chuột không dây LogiTech', price: 45, category: 'Phụ kiện', inStock: true },
+                { id: 'P03', name: 'Bàn phím cơ Keychron', price: 95, category: 'Phụ kiện', inStock: false },
+                { id: 'P04', name: 'Màn hình Dell UltraSharp', price: 450, category: 'Màn hình', inStock: true },
+                { id: 'P05', name: 'Tai nghe Sony WH-1000XM5', price: 350, category: 'Phụ kiện', inStock: true },
+            ];
+
+        function check() {
+            if(products.inStock === "true"){
+                alert(`Sản phẩm còn hàng là: ${products.name}`);
+            }
+        }
+        check();
+
+        // Tạo danh sách sản phẩm theo danh mục
+        const list = products.filter(product => product.category === "Phụ kiện")
+            alert(`Danh sách sản phẩm "Phụ kiện": ${list.name}`);
+        list();
+           
+
+        // Thống kê tài sản
+        const found = products.filter(product => product.inStock === true);
+        const sum = check.reduce(s => s.price);
+            alert(`Tổng giá trị tài sản: ${sum}`);
+        sum();
+
+        // Gọi hàm
+        
+    </script>
+</body>
+</html>
