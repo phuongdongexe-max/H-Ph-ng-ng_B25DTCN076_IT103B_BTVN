@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo thay An</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        .form {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            margin: 20px;
+            width: 300px;
+        }
+        .submit-btn {
+            width: 10%;
+        }
+
+        .input-group{
+            justify-content: space-between;
+            margin: 20px;
+            display: flex;
+        }
+
+
+    </style>
+</head>
+<body>
+    <!-- <h1 onclick="handleClick()">Demo DOM</h1> -->
+    <h1 onclick="handleClick()">Demo DOM</h1>
+
+    <form action="" class="form">
+        <div class="input-group">
+            <label for="">Họ và tên</label>
+        <input type="text" name="" id="name">
+        </div>
+        <div class="input-group">
+            <label for="">Tuổi</label>
+        <input type="number" id="age">
+        </div>
+        <input type="submit" class="submit-btn">
+    </form>
+
+    <div id="container"></div>
+
+    <script>
+        // Truy cập phần tử trong html từ trong DOM
+        let form = document.getElementById("form");
+        let inputGroup = document.getElementsByClassName("input-group");
+        let labelGroup = document.getElementsByTagName("label");
+        console.log(form);
+        console.log(inputGroup);
+
+        // Thao tác với DOM
+            // 1. Thuộc tính trong phần tử
+                // a. Nội dung html 
+            // console.log(form.innerHTML);
+                    // Thay đổi được nội dung bên trong
+            form.innerHTML = "Đây là nội dung mới bên trong thẻ form";
+            form.innerHTML += `<h3>Đây là nội dung mới bên trong thẻ form<h3>
+                                <button>Bấm được</button>` //Nối chuỗi vào file HTML
+                    // Nội dung tex bên trong phần tử
+            console.log(form.id);
+            console.log(form.innerText);
+            console.log(form.classList);
+            form.classList.add("bg-blue");
+            form.classList.remove("bg-blue");
+            form.classList.toggle("bg-blue");
+
+        // DOM Methods
+            // Tự tạo phần tử
+        let headerElement = document.createElement("h1");
+        headerElement.innerText = "Đây là tiêu đề h1";
+        document.getElementById("container").appendChild(headerElement)
+        headerElement.setAttribute("id", "header-id"); //headerElement.id = "header-id";
+        console.log(headerElement.getAttribute("id")); //console.log(headerElement);
+
+        // DOM event
+        function handleClick () {
+            const form = document.getElementById("form");
+            form.classList.toggle("bg-blue");
+        }
+
+        const h1 = document.getElementsByTagName("h1")[0];
+        // h1.onclick = handleClick;
+        document.addEventListener("click", handleClick);
+        h1.addEventListener("click", () => {
+            console.log("Sự kiện được gắn bằng addEventListener");
+        });
+
+        const nameInput = document.getElementById("name");
+        nameInput.addEventListener("change", () => {
+            console.log("Giá trị trong ô input bị thay đổi");
+            console.log("Giá trị mới là:", nameInput.value);
+        });
+
+        const form = document.getElementById("form");
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            console.log(e.target);
+        });
+
+
+    </script>
+</body>
+</html>
+
+
+<!--Note: Lưu ý trong bài giảng
+ 1. Tìm hiểu thêm về textContent và innerText
+ 2. Tìm hiểu thêm về Traversal
+ 3. Chặn tự động tải lại trang bằng preventDefault
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-->

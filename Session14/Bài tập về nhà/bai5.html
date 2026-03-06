@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Sản Phẩm Chợ Tết</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        #product-list { list-style-type: none; padding: 0; max-width: 500px; }
+        
+        .product-item { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            border: 1px solid #ccc; 
+            padding: 10px; 
+            margin-bottom: 10px; 
+            background-color: #f9f9f9; 
+            border-radius: 4px;
+        }
+        
+        .product { flex-grow: 1; }
+        .action-btns { display: flex; gap: 8px; }
+        
+        form { margin-top: 20px; }
+        input { margin-right: 5px; padding: 5px; }
+        button { padding: 5px 10px; cursor: pointer; border: none; border-radius: 3px; }
+        
+        form button { background-color: #4CAF50; color: white; border: 1px solid #ccc; }
+        .edit-price-btn { background-color: #ffc107; color: black; }
+        .edit-price-btn:hover { background-color: #e0a800; }
+        .delete-btn { background-color: #ff4d4d; color: white; }
+        .delete-btn:hover { background-color: #cc0000; }
+
+        /* CSS MỚI: Định dạng cho ô tìm kiếm */
+        #search-input {
+            width: 100%;
+            max-width: 485px; /* Cho vừa vặn với danh sách */
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Danh Sách Sản Phẩm Chợ Tết</h1>
+    
+    <input type="text" id="search-input" placeholder="Tìm sản phẩm...">
+
+    <ul id="product-list">
+        </ul>
+
+    <form id="product-form">
+        <input type="text" id="product-name" placeholder="Tên sản phẩm" required>
+        <input type="number" id="product-price" placeholder="Giá (VND)" required>
+        <button type="submit">Thêm Sản Phẩm</button>
+    </form>
+
+    <script>
+        const products = [
+            { id: 1, name: "Bánh Chưng", price: 150000 },
+            { id: 2, name: "Giò Lụa", price: 180000 },
+            { id: 3, name: "Cành Đào", price: 500000 },
+            { id: 4, name: "Mứt Tết", price: 120000 },
+            { id: 5, name: "Bao Lì Xì", price: 25000 },
+            { id: 6, name: "Dưa Hấu Tết", price: 80000 },
+        ];
+
+        const productList = document.getElementById("product-list");
+        const productForm = document.getElementById("product-form");
+        const nameInput = document.getElementById("product-name");
+        const priceInput = document.getElementById("product-price");
+        
+        // Truy xuất phần tử ô tìm kiếm mới
+        const searchInput = document.getElementById("search-input");
+
+        function createProductItem(product) {
+            const liItem = document.createElement("li");
+            liItem.className = "product-item";
+
+            const divProduct = document.createElement("div");
+            divProduct.className = "product";
+            
+            const updateProductDisplay = () => {
+                const priceFormatted = product.price.toLocaleString("vi-VN");
+                // Tên sản phẩm được bọc trong thẻ <strong> để dễ lấy ra khi tìm kiếm
+                divProduct.innerHTML = `<strong class="p-name">${product.name}</strong> - ${priceFormatted} VND`;
+            };
+            
+            updateProductDisplay();
+
+            const actionDiv = document.createElement("div");
+            actionDiv.className = "action-btns";
+
+            const editBtn = document.createElement("button");
+            editBtn.className = "edit-price-btn";
+            editBtn.textContent = "Sửa giá";
+            
+            editBtn.addEventListener("click", function() {
+                const newPriceInput = prompt("Nhập giá mới (VND):", product.price);
+                if (newPriceInput !== null && newPriceInput.trim() !== "") {
+                    const newPriceNum = Number(newPriceInput);
+                    if (!isNaN(newPriceNum) && newPriceNum >= 0) {
+                        product.price = newPriceNum;
+                        updateProductDisplay(); 
+                    } else {
+                        alert("Vui lòng nhập một số hợp lệ!");
+                    }
+                }
+            });
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.className = "delete-btn";
+            deleteBtn.textContent = "Xóa";
+
+            deleteBtn.addEventListener("click", function() {
+                const isConfirm = confirm("Bạn có chắc muốn xóa sản phẩm này?");
+                if (isConfirm) {
+                    liItem.remove(); 
+                }
+            });
+
+            actionDiv.appendChild(editBtn);
+            actionDiv.appendChild(deleteBtn);
+            
+            liItem.appendChild(divProduct);
+            liItem.appendChild(actionDiv);
+
+            return liItem;
+        }
+
+        // Tải danh sách ban đầu
+        products.forEach(product => {
+            const newItem = createProductItem(product);
+            productList.appendChild(newItem);
+        });
+
+        // Xử lý Thêm sản phẩm
+        productForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const newName = nameInput.value;
+            const newPrice = Number(priceInput.value);
+
+            const newProduct = {
+                id: products.length > 0 ? products[products.length - 1].id + 1 : 1, 
+                name: newName,
+                price: newPrice
+            };
+
+            products.push(newProduct);
+            
+            const newDOMItem = createProductItem(newProduct);
+            productList.appendChild(newDOMItem);
+
+            nameInput.value = "";
+            priceInput.value = "";
+            
+            // Tùy chọn: Xóa ô tìm kiếm để hiện lại toàn bộ danh sách khi vừa thêm mới
+            searchInput.value = "";
+            searchInput.dispatchEvent(new Event('input'));
+        });
+
+        // --- BÀI MỚI: CHỨC NĂNG TÌM KIẾM SẢN PHẨM ---
+        searchInput.addEventListener("input", function() {
+            // 1. Lấy giá trị tìm kiếm và chuyển về chữ thường để tìm kiếm không phân biệt hoa/thường
+            const keyword = searchInput.value.toLowerCase().trim();
+
+            // 2. Lấy tất cả các phần tử sản phẩm đang hiển thị (.product-item)
+            const allItems = document.querySelectorAll(".product-item");
+
+            // 3. Duyệt qua từng phần tử để kiểm tra
+            allItems.forEach(item => {
+                // Lấy tên sản phẩm (nằm trong thẻ strong có class p-name)
+                const productName = item.querySelector(".p-name").textContent.toLowerCase();
+
+                // 4. Nếu tên chứa từ khóa -> hiển thị, ngược lại -> ẩn đi
+                if (productName.includes(keyword)) {
+                    item.style.display = ""; // Chuỗi rỗng sẽ đưa về hiển thị mặc định (flex)
+                } else {
+                    item.style.display = "none";
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>

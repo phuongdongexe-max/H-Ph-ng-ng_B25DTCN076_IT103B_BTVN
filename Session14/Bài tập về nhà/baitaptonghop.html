@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ Hàng Chợ Tết</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; gap: 30px; padding: 20px; background-color: #fdf5e6; }
+        h1, h2 { color: #d32f2f; }
+        .products-section { width: 65%; }
+        #product-container { display: flex; flex-wrap: wrap; gap: 15px; }
+        .product-card { border: 1px solid #f5b041; background-color: #fff; padding: 15px; border-radius: 8px; width: calc(33.333% - 10px); box-sizing: border-box; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .product-img { font-size: 50px; margin-bottom: 10px; }
+        .product-card h3 { margin: 10px 0; font-size: 18px; }
+        .buy-btn { background-color: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; width: 100%; font-weight: bold; }
+        .buy-btn:hover { background-color: #c0392b; }
+        .cart-section { width: 35%; background-color: #fff; padding: 20px; border-radius: 8px; border: 2px solid #e74c3c; height: fit-content; }
+        #cart-list { list-style-type: none; padding: 0; margin: 0; }
+        #cart-list li { display: flex; justify-content: space-between; border-bottom: 1px dashed #ccc; padding: 10px 0; }
+        #empty-cart-msg { color: #7f8c8d; font-style: italic; justify-content: center !important; border: none !important;}
+        .total-box { margin-top: 20px; font-size: 20px; font-weight: bold; text-align: right; border-top: 2px solid #e74c3c; padding-top: 15px;}
+        .total-box span { color: #d32f2f; }
+        
+        /* CSS MỚI: Định dạng thêm cho phần Số lượng */
+        .item-qty { color: #e74c3c; font-weight: bold; margin-left: 5px; }
+    </style>
+</head>
+<body>
+
+    <div class="products-section">
+        <h1>Sắm Đồ Tết 🧨</h1>
+        <div id="product-container"></div>
+    </div>
+
+    <div class="cart-section">
+        <h2>Giỏ Hàng Của Bạn 🛒</h2>
+        <ul id="cart-list">
+            <li id="empty-cart-msg">Giỏ hàng đang trống</li>
+        </ul>
+        <div class="total-box">
+            Tổng tiền: <span id="total-price">0</span> VND
+        </div>
+    </div>
+
+    <script>
+        const products = [
+            { id: 1, name: "Bánh Chưng", price: 150000, img: "🧧" },
+            { id: 2, name: "Giò Lụa", price: 180000, img: "🍖" },
+            { id: 3, name: "Cành Đào", price: 500000, img: "🌸" },
+            { id: 4, name: "Mứt Tết", price: 120000, img: "🍬" },
+            { id: 5, name: "Lì Xì (Tệp)", price: 20000, img: "🧧" },
+            { id: 6, name: "Dưa Hấu", price: 60000, img: "🍉" }
+        ];
+
+        const productContainer = document.getElementById("product-container");
+        const cartList = document.getElementById("cart-list");
+        const totalPriceEl = document.getElementById("total-price");
+
+        // BIẾN MỚI: Mảng chứa các sản phẩm đã chọn vào giỏ
+        let cart = []; 
+
+        function renderProducts() {
+            products.forEach(product => {
+                const productCard = document.createElement("div");
+                productCard.className = "product-card";
+                const formattedPrice = product.price.toLocaleString("vi-VN");
+
+                productCard.innerHTML = `
+                    <div class="product-img">${product.img}</div>
+                    <h3>${product.name}</h3>
+                    <p>${formattedPrice} VND</p>
+                    <button class="buy-btn" data-id="${product.id}">Mua ngay</button>
+                `;
+                productContainer.appendChild(productCard);
+            });
+
+            attachBuyEvents();
+        }
+
+        function attachBuyEvents() {
+            const buyButtons = document.querySelectorAll(".buy-btn");
+            buyButtons.forEach(button => {
+                button.addEventListener("click", function() {
+                    const productId = Number(this.getAttribute("data-id"));
+                    const selectedProduct = products.find(p => p.id === productId);
+                    if (selectedProduct) {
+                        addToCart(selectedProduct);
+                    }
+                });
+            });
+        }
+
+        // --- CẬP NHẬT: LOGIC THÊM SẢN PHẨM VÀO GIỎ HÀNG ---
+        function addToCart(product) {
+            // 1. Kiểm tra xem sản phẩm này đã có trong mảng cart chưa?
+            const existingItem = cart.find(item => item.id === product.id);
+
+            if (existingItem) {
+                // 2A. Nếu đã có, chỉ cần tăng số lượng lên 1
+                existingItem.quantity += 1;
+            } else {
+                // 2B. Nếu chưa có, tạo object mới (copy thuộc tính cũ và thêm quantity: 1)
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            // 3. Sau khi dữ liệu cart thay đổi, gọi hàm vẽ lại toàn bộ giỏ hàng
+            updateCartUI();
+        }
+
+        // --- HÀM MỚI: VẼ LẠI GIAO DIỆN GIỎ HÀNG DỰA TRÊN MẢNG CART ---
+        function updateCartUI() {
+            // 1. Xóa trắng giỏ hàng HTML hiện tại để vẽ lại từ đầu
+            cartList.innerHTML = "";
+            let totalAmount = 0;
+
+            // 2. Nếu giỏ hàng trống, hiển thị lại dòng chữ mặc định
+            if (cart.length === 0) {
+                cartList.innerHTML = '<li id="empty-cart-msg">Giỏ hàng đang trống</li>';
+                totalPriceEl.innerText = "0";
+                return;
+            }
+
+            // 3. Duyệt mảng cart để in ra từng dòng
+            cart.forEach(item => {
+                const liItem = document.createElement("li");
+                
+                // Tính tiền = giá 1 món * số lượng
+                const itemTotal = item.price * item.quantity; 
+                totalAmount += itemTotal; // Cộng dồn vào tổng hóa đơn
+
+                const formattedTotal = itemTotal.toLocaleString("vi-VN");
+                
+                // Hiển thị: Tên sản phẩm x Số lượng ----- Thành tiền
+                liItem.innerHTML = `
+                    <span>${item.name} <span class="item-qty">x${item.quantity}</span></span> 
+                    <span>${formattedTotal} đ</span>
+                `;
+                
+                cartList.appendChild(liItem);
+            });
+
+            // 4. Cập nhật tổng tiền ở góc dưới
+            totalPriceEl.innerText = totalAmount.toLocaleString("vi-VN");
+        }
+
+        renderProducts();
+    </script>
+</body>
+</html>

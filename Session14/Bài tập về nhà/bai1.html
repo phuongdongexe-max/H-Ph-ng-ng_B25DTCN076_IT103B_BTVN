@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Danh Sách Sản Phẩm Chợ Tết</h1>
+    <ul id="product-list">
+    </ul>
+
+    <form id="product-form">
+        <input type="text" id="product-name" placeholder="Tên sản phẩm" required>
+        <input type="number" id="product-price" placeholder="Giá (VND)" required>
+        <button type="submit">Thêm Sản Phẩm</button>
+    </form>
+
+
+    <script>
+        const products = [
+            { id: 1, name: "Bánh Chưng", price: 150000 },
+            { id: 2, name: "Giò Lụa", price: 180000 },
+            { id: 3, name: "Cành Đào", price: 500000 },
+            { id: 4, name: "Mứt Tết", price: 120000 },
+            { id: 5, name: "Bao Lì Xì", price: 25000 },
+            { id: 6, name: "Dưa Hấu Tết", price: 80000 },
+        ];
+
+        // --- BẮT ĐẦU THỰC HIỆN YÊU CẦU BÀI TẬP ---
+
+        // 1. Truy xuất phần tử product-list
+        const productList = document.getElementById("product-list");
+
+        // 2. Duyệt qua mảng products
+        products.forEach(product => {
+
+            // 3. Với mỗi sản phẩm, tạo một thẻ <div class="product"> chứa Tên và Giá
+            const productDiv = document.createElement("div");
+            productDiv.className = "product";
+
+            // Chèn nội dung Tên và Giá vào thẻ div (có format lại số tiền cho đẹp)
+            const priceVND = product.price.toLocaleString('vi-VN');
+            productDiv.innerHTML = `<strong>${product.name}</strong> - ${priceVND} VND`;
+
+            // Tạo thẻ <li> để bọc thẻ div (vì phần tử cha là <ul>)
+            const listItem = document.createElement("li");
+            listItem.appendChild(productDiv);
+
+            // 4. Chèn các thẻ này vào product-list để hiển thị ra giao diện màn hình
+            productList.appendChild(listItem);
+
+        });
+    </script>
+</body>
+
+</html>

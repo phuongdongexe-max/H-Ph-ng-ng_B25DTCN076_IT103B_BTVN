@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Sản Phẩm Chợ Tết</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        #product-list { list-style-type: none; padding: 0; max-width: 500px; }
+        
+        .product-item { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            border: 1px solid #ccc; 
+            padding: 10px; 
+            margin-bottom: 10px; 
+            background-color: #f9f9f9; 
+            border-radius: 4px;
+        }
+        
+        .product { flex-grow: 1; }
+        .action-btns { display: flex; gap: 8px; }
+        
+        form { margin-top: 20px; }
+        input { margin-right: 5px; padding: 5px; }
+        button { padding: 5px 10px; cursor: pointer; border: none; border-radius: 3px; }
+        
+        form button { background-color: #4CAF50; color: white; border: 1px solid #ccc; }
+        .edit-price-btn { background-color: #ffc107; color: black; }
+        .edit-price-btn:hover { background-color: #e0a800; }
+        .delete-btn { background-color: #ff4d4d; color: white; }
+        .delete-btn:hover { background-color: #cc0000; }
+
+        #search-input { width: 100%; max-width: 485px; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        
+        /* CSS MỚI: Định dạng cho cụm nút sắp xếp */
+        .sort-controls { margin-bottom: 15px; display: flex; gap: 10px; }
+        .sort-controls button { background-color: #008CBA; color: white; }
+        .sort-controls button:hover { background-color: #007bb5; }
+    </style>
+</head>
+<body>
+
+    <h1>Danh Sách Sản Phẩm Chợ Tết</h1>
+    
+    <input type="text" id="search-input" placeholder="Tìm sản phẩm...">
+
+    <div class="sort-controls">
+        <button id="sort-asc">Sắp xếp giá: Thấp ➝ Cao</button>
+        <button id="sort-desc">Sắp xếp giá: Cao ➝ Thấp</button>
+    </div>
+
+    <ul id="product-list">
+        </ul>
+
+    <form id="product-form">
+        <input type="text" id="product-name" placeholder="Tên sản phẩm" required>
+        <input type="number" id="product-price" placeholder="Giá (VND)" required>
+        <button type="submit">Thêm Sản Phẩm</button>
+    </form>
+
+    <script>
+        const products = [
+            { id: 1, name: "Bánh Chưng", price: 150000 },
+            { id: 2, name: "Giò Lụa", price: 180000 },
+            { id: 3, name: "Cành Đào", price: 500000 },
+            { id: 4, name: "Mứt Tết", price: 120000 },
+            { id: 5, name: "Bao Lì Xì", price: 25000 },
+            { id: 6, name: "Dưa Hấu Tết", price: 80000 },
+        ];
+
+        const productList = document.getElementById("product-list");
+        const productForm = document.getElementById("product-form");
+        const nameInput = document.getElementById("product-name");
+        const priceInput = document.getElementById("product-price");
+        const searchInput = document.getElementById("search-input");
+        
+        // Truy xuất 2 nút sắp xếp
+        const sortAscBtn = document.getElementById("sort-asc");
+        const sortDescBtn = document.getElementById("sort-desc");
+
+        function createProductItem(product) {
+            const liItem = document.createElement("li");
+            liItem.className = "product-item";
+
+            const divProduct = document.createElement("div");
+            divProduct.className = "product";
+            
+            const updateProductDisplay = () => {
+                const priceFormatted = product.price.toLocaleString("vi-VN");
+                divProduct.innerHTML = `<strong class="p-name">${product.name}</strong> - ${priceFormatted} VND`;
+            };
+            
+            updateProductDisplay();
+
+            const actionDiv = document.createElement("div");
+            actionDiv.className = "action-btns";
+
+            const editBtn = document.createElement("button");
+            editBtn.className = "edit-price-btn";
+            editBtn.textContent = "Sửa giá";
+            editBtn.addEventListener("click", function() {
+                const newPriceInput = prompt("Nhập giá mới (VND):", product.price);
+                if (newPriceInput !== null && newPriceInput.trim() !== "") {
+                    const newPriceNum = Number(newPriceInput);
+                    if (!isNaN(newPriceNum) && newPriceNum >= 0) {
+                        product.price = newPriceNum;
+                        updateProductDisplay(); 
+                    } else {
+                        alert("Vui lòng nhập một số hợp lệ!");
+                    }
+                }
+            });
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.className = "delete-btn";
+            deleteBtn.textContent = "Xóa";
+            deleteBtn.addEventListener("click", function() {
+                const isConfirm = confirm("Bạn có chắc muốn xóa sản phẩm này?");
+                if (isConfirm) {
+                    liItem.remove(); 
+                    // Xóa luôn dữ liệu trong mảng gốc để khi sort không bị hiện lại
+                    const index = products.findIndex(p => p.id === product.id);
+                    if (index !== -1) products.splice(index, 1);
+                }
+            });
+
+            actionDiv.appendChild(editBtn);
+            actionDiv.appendChild(deleteBtn);
+            
+            liItem.appendChild(divProduct);
+            liItem.appendChild(actionDiv);
+
+            return liItem;
+        }
+
+        // HÀM MỚI: Gom code hiển thị danh sách vào một hàm để tái sử dụng khi sắp xếp
+        function renderProducts() {
+            productList.innerHTML = ""; // Xóa trắng danh sách cũ trên màn hình
+            products.forEach(product => {
+                const newItem = createProductItem(product);
+                productList.appendChild(newItem);
+            });
+            // Tự động chạy lại bộ lọc tìm kiếm để giữ trạng thái sau khi sắp xếp
+            searchInput.dispatchEvent(new Event('input'));
+        }
+
+        // Gọi hàm lần đầu để tải danh sách
+        renderProducts();
+
+        // Xử lý Thêm sản phẩm
+        productForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+            const newName = nameInput.value;
+            const newPrice = Number(priceInput.value);
+
+            const newProduct = {
+                id: products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1, // Fix lỗi ID khi xóa phần tử cuối
+                name: newName,
+                price: newPrice
+            };
+
+            products.push(newProduct);
+            
+            const newDOMItem = createProductItem(newProduct);
+            productList.appendChild(newDOMItem);
+
+            nameInput.value = "";
+            priceInput.value = "";
+            
+            searchInput.value = "";
+            searchInput.dispatchEvent(new Event('input'));
+        });
+
+        // Xử lý Tìm kiếm
+        searchInput.addEventListener("input", function() {
+            const keyword = searchInput.value.toLowerCase().trim();
+            const allItems = document.querySelectorAll(".product-item");
+
+            allItems.forEach(item => {
+                const productName = item.querySelector(".p-name").textContent.toLowerCase();
+                if (productName.includes(keyword)) {
+                    item.style.display = ""; 
+                } else {
+                    item.style.display = "none";
+                }
+            });
+        });
+
+        // --- BÀI MỚI: CHỨC NĂNG SẮP XẾP ---
+        
+        // Sắp xếp Tăng dần (Thấp đến Cao)
+        sortAscBtn.addEventListener("click", function() {
+            // Dùng hàm sort với (a, b) => a - b để xếp số nhỏ lên trước
+            products.sort((a, b) => a.price - b.price);
+            renderProducts(); // Vẽ lại giao diện
+        });
+
+        // Sắp xếp Giảm dần (Cao đến Thấp)
+        sortDescBtn.addEventListener("click", function() {
+            // Dùng hàm sort với (a, b) => b - a để xếp số lớn lên trước
+            products.sort((a, b) => b.price - a.price);
+            renderProducts(); // Vẽ lại giao diện
+        });
+
+    </script>
+</body>
+</html>

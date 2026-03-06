@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Sản Phẩm Chợ Tết</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        #product-list { list-style-type: none; padding: 0; max-width: 500px; }
+        
+        .product-item { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            border: 1px solid #ccc; 
+            padding: 10px; 
+            margin-bottom: 10px; 
+            background-color: #f9f9f9; 
+            border-radius: 4px;
+        }
+        
+        /* Căn chỉnh nội dung tên và giá */
+        .product { flex-grow: 1; }
+
+        /* Vùng chứa các nút thao tác */
+        .action-btns {
+            display: flex;
+            gap: 8px; /* Khoảng cách giữa nút Sửa và Xóa */
+        }
+        
+        form { margin-top: 20px; }
+        input { margin-right: 5px; padding: 5px; }
+        button { padding: 5px 10px; cursor: pointer; border: none; border-radius: 3px; }
+        
+        /* Nút Submit */
+        form button { background-color: #4CAF50; color: white; border: 1px solid #ccc; }
+        
+        /* Nút Sửa Giá */
+        .edit-price-btn { background-color: #ffc107; color: black; }
+        .edit-price-btn:hover { background-color: #e0a800; }
+
+        /* Nút Xóa */
+        .delete-btn { background-color: #ff4d4d; color: white; }
+        .delete-btn:hover { background-color: #cc0000; }
+    </style>
+</head>
+<body>
+
+    <h1>Danh Sách Sản Phẩm Chợ Tết</h1>
+    <ul id="product-list">
+        </ul>
+
+    <form id="product-form">
+        <input type="text" id="product-name" placeholder="Tên sản phẩm" required>
+        <input type="number" id="product-price" placeholder="Giá (VND)" required>
+        <button type="submit">Thêm Sản Phẩm</button>
+    </form>
+
+    <script>
+        const products = [
+            { id: 1, name: "Bánh Chưng", price: 150000 },
+            { id: 2, name: "Giò Lụa", price: 180000 },
+            { id: 3, name: "Cành Đào", price: 500000 },
+            { id: 4, name: "Mứt Tết", price: 120000 },
+            { id: 5, name: "Bao Lì Xì", price: 25000 },
+            { id: 6, name: "Dưa Hấu Tết", price: 80000 },
+        ];
+
+        const productList = document.getElementById("product-list");
+        const productForm = document.getElementById("product-form");
+        const nameInput = document.getElementById("product-name");
+        const priceInput = document.getElementById("product-price");
+
+        function createProductItem(product) {
+            const liItem = document.createElement("li");
+            liItem.className = "product-item";
+
+            // 1. Khối chứa thông tin sản phẩm
+            const divProduct = document.createElement("div");
+            divProduct.className = "product";
+            
+            // Hàm tiện ích để cập nhật lại nội dung HTML của sản phẩm
+            const updateProductDisplay = () => {
+                const priceFormatted = product.price.toLocaleString("vi-VN");
+                divProduct.innerHTML = `<strong>${product.name}</strong> - ${priceFormatted} VND`;
+            };
+            
+            // Gọi hàm hiển thị lần đầu
+            updateProductDisplay();
+
+            // Khối chứa các nút bấm (để dùng Flexbox cho đẹp)
+            const actionDiv = document.createElement("div");
+            actionDiv.className = "action-btns";
+
+            // 2. Nút SỬA GIÁ
+            const editBtn = document.createElement("button");
+            editBtn.className = "edit-price-btn";
+            editBtn.textContent = "Sửa giá";
+            
+            // Lắng nghe sự kiện click cho nút Sửa giá
+            editBtn.addEventListener("click", function() {
+                // Hiển thị hộp thoại Prompt yêu cầu nhập giá mới
+                const newPriceInput = prompt("Nhập giá mới (VND):", product.price);
+                
+                // Kiểm tra xem người dùng có nhập và không bấm Cancel
+                if (newPriceInput !== null && newPriceInput.trim() !== "") {
+                    const newPriceNum = Number(newPriceInput);
+                    
+                    // Cập nhật giá trị vào mảng/object nếu nó là số hợp lệ
+                    if (!isNaN(newPriceNum) && newPriceNum >= 0) {
+                        product.price = newPriceNum;
+                        // Gọi lại hàm tiện ích để cập nhật giao diện
+                        updateProductDisplay(); 
+                    } else {
+                        alert("Vui lòng nhập một số hợp lệ!");
+                    }
+                }
+            });
+
+            // 3. Nút XÓA
+            const deleteBtn = document.createElement("button");
+            deleteBtn.className = "delete-btn";
+            deleteBtn.textContent = "Xóa";
+
+            deleteBtn.addEventListener("click", function() {
+                const isConfirm = confirm("Bạn có chắc muốn xóa sản phẩm này?");
+                if (isConfirm) {
+                    liItem.remove(); 
+                }
+            });
+
+            // 4. Lắp ráp các phần tử vào thẻ li
+            actionDiv.appendChild(editBtn);
+            actionDiv.appendChild(deleteBtn);
+            
+            liItem.appendChild(divProduct);
+            liItem.appendChild(actionDiv);
+
+            return liItem;
+        }
+
+        // Tải danh sách ban đầu
+        products.forEach(product => {
+            const newItem = createProductItem(product);
+            productList.appendChild(newItem);
+        });
+
+        // Xử lý Thêm sản phẩm
+        productForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const newName = nameInput.value;
+            const newPrice = Number(priceInput.value);
+
+            const newProduct = {
+                id: products.length > 0 ? products[products.length - 1].id + 1 : 1, 
+                name: newName,
+                price: newPrice
+            };
+
+            products.push(newProduct);
+            
+            const newDOMItem = createProductItem(newProduct);
+            productList.appendChild(newDOMItem);
+
+            nameInput.value = "";
+            priceInput.value = "";
+        });
+    </script>
+</body>
+</html>
