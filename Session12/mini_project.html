@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini</title>
+</head>
+
+<body>
+    <script>
+        let students = [];
+        let isRunning = true;
+        while (isRunning) {
+            let menu = "1. Create\n2. Update\n3. Soft Delete\n4. Restore\n5. View Pipeline\n6. Analytics\n7. Exit\nChọn:";
+            let choice = prompt(menu);
+            switch (choice) {
+                case "1":
+                    let id = prompt("ID:");
+                    let name = prompt("Tên:");
+                    let age = Number(prompt("Tuổi (16-60):"));
+                    let gpa = Number(prompt("GPA (0-10):"));
+                    let status = prompt("Trạng thái (active/inactive):");
+                    let isValid = true;
+                    if (age < 16) isValid = false;
+                    if (age > 60) isValid = false;
+                    if (gpa < 0.0) isValid = false;
+                    if (gpa > 10.0) isValid = false;
+                    if (status !== "active") {
+                        if (status !== "inactive") isValid = false;
+                    }
+                    if (isValid) {
+                        let now = Date.now();
+                        students.push({ id: id, name: name, age: age, gpa: gpa, status: status, createdAt: now, updatedAt: now, deletedAt: null });
+                        alert("Thêm thành công");
+                    } else {
+                        alert("Dữ liệu không hợp lệ");
+                    }
+                    break;
+                case "2":
+                    let upId = prompt("ID cần sửa:");
+                    let upIndex = students.findIndex(s => s.id === upId);
+                    if (upIndex !== -1) {
+                        let upName = prompt("Tên mới:");
+                        let upAge = prompt("Tuổi mới:");
+                        let upGpa = prompt("GPA mới:");
+                        let upStatus = prompt("Trạng thái mới:");
+                        if (upName !== "") students[upIndex].name = upName;
+                        if (upAge !== "") students[upIndex].age = Number(upAge);
+                        if (upGpa !== "") students[upIndex].gpa = Number(upGpa);
+                        if (upStatus !== "") students[upIndex].status = upStatus;
+                        students[upIndex].updatedAt = Date.now();
+                        alert("Cập nhật thành công");
+                    } else {
+                        alert("Không tìm thấy");
+                    }
+                    break;
+                case "3":
+                    let delId = prompt("ID cần xóa:");
+                    let delIndex = students.findIndex(s => s.id === delId);
+                    if (delIndex !== -1) {
+                        let confirmDel = prompt("Xác nhận xóa (y/n)?");
+                        if (confirmDel === "y") {
+                            students[delIndex].status = "inactive";
+                            students[delIndex].deletedAt = Date.now();
+                            alert("Đã xóa mềm");
+                        }
+                    } else {
+                        alert("Không tìm thấy");
+                    }
+                    break;
+                case "4":
+                    let resId = prompt("ID cần phục hồi:");
+                    let resIndex = students.findIndex(s => s.id === resId);
+                    if (resIndex !== -1) {
+                        students[resIndex].status = "active";
+                        students[resIndex].updatedAt = Date.now();
+                        students[resIndex].deletedAt = null;
+                        alert("Phục hồi thành công");
+                    } else {
+                        alert("Không tìm thấy");
+                    }
+                    break;
+                case "5":
+                    let keyword = prompt("Tên cần tìm:").toLowerCase();
+                    let fStatus = prompt("Lọc trạng thái:");
+                    let sortOrder = prompt("Sắp xếp GPA (asc/desc):");
+                    let pipelineData = students.filter(s => s.name.toLowerCase().includes(keyword));
+                    if (fStatus !== "") {
+                        pipelineData = pipelineData.filter(s => s.status === fStatus);
+                    }
+                    if (sortOrder === "asc") {
+                        pipelineData.sort((a, b) => a.gpa - b.gpa);
+                    }
+                    if (sortOrder === "desc") {
+                        pipelineData.sort((a, b) => b.gpa - a.gpa);
+                    }
+                    let limit = 5;
+                    let totalPages = Math.ceil(pipelineData.length / limit);
+                    if (totalPages === 0) totalPages = 1;
+                    let currentPage = 1;
+                    let pagingRunning = true;
+                    while (pagingRunning) {
+                        let startIndex = (currentPage - 1) * limit;
+                        let endIndex = startIndex + limit;
+                        let pageData = pipelineData.slice(startIndex, endIndex);
+                        console.log("--- Trang " + currentPage + " / " + totalPages + " (Tổng: " + pipelineData.length + ") ---");
+                        console.table(pageData);
+                        let pChoice = prompt("1.First 2.Prev 3.Next 4.Last 5.Thoát");
+                        if (pChoice === "1") currentPage = 1;
+                        if (pChoice === "2") {
+                            if (currentPage > 1) currentPage--;
+                        }
+                        if (pChoice === "3") {
+                            if (currentPage < totalPages) currentPage++;
+                        }
+                        if (pChoice === "4") currentPage = totalPages;
+                        if (pChoice === "5") pagingRunning = false;
+                    }
+                    break;
+                case "6":
+                    let dash = students.reduce((acc, cur) => {
+                        acc.total++;
+                        if (cur.status === "active") acc.active++;
+                        if (cur.status === "inactive") acc.inactive++;
+                        acc.sumGpa += cur.gpa;
+                        if (cur.status === "active") {
+                            acc.activeGpaSum += cur.gpa;
+                            acc.activeCount++;
+                        }
+                        if (cur.status === "inactive") {
+                            acc.inactiveGpaSum += cur.gpa;
+                            acc.inactiveCount++;
+                        }
+                        acc.topGpa.push(cur);
+                        acc.topGpa.sort((a, b) => b.gpa - a.gpa);
+                        if (acc.topGpa.length > 5) acc.topGpa.pop();
+                        acc.topYoung.push(cur);
+                        acc.topYoung.sort((a, b) => a.age - b.age);
+                        if (acc.topYoung.length > 5) acc.topYoung.pop();
+                        if (cur.gpa === 0) acc.risk0.push(cur);
+                        if (cur.gpa < 3.0) acc.risk3.push(cur);
+                        if (cur.gpa >= 8.0) acc.dist.gioi++;
+                        if (cur.gpa >= 6.5) {
+                            if (cur.gpa < 8.0) acc.dist.kha++;
+                        }
+                        if (cur.gpa >= 5.0) {
+                            if (cur.gpa < 6.5) acc.dist.tb++;
+                        }
+                        if (cur.gpa < 5.0) acc.dist.yeu++;
+                        return acc;
+                    }, { total: 0, active: 0, inactive: 0, sumGpa: 0, activeGpaSum: 0, activeCount: 0, inactiveGpaSum: 0, inactiveCount: 0, topGpa: [], topYoung: [], risk0: [], risk3: [], dist: { gioi: 0, kha: 0, tb: 0, yeu: 0 } });
+                    console.log("Tổng SV: " + dash.total);
+                    console.log("Active: " + dash.active + " (" + (dash.active / dash.total * 100 || 0).toFixed(2) + "%)");
+                    console.log("Inactive: " + dash.inactive + " (" + (dash.inactive / dash.total * 100 || 0).toFixed(2) + "%)");
+                    console.log("GPA TB: " + (dash.sumGpa / dash.total || 0).toFixed(2));
+                    console.log("GPA TB Active: " + (dash.activeGpaSum / dash.activeCount || 0).toFixed(2));
+                    console.log("GPA TB Inactive: " + (dash.inactiveGpaSum / dash.inactiveCount || 0).toFixed(2));
+                    console.log("Top 5 GPA:");
+                    console.table(dash.topGpa);
+                    console.log("Top 5 Nhỏ tuổi:");
+                    console.table(dash.topYoung);
+                    console.log("Nguy cơ GPA=0:");
+                    console.table(dash.risk0);
+                    console.log("Nguy cơ GPA<3:");
+                    console.table(dash.risk3);
+                    console.log("Tổng nguy cơ: " + dash.risk3.length);
+                    console.log("Giỏi: " + dash.dist.gioi);
+                    console.log("Khá: " + dash.dist.kha);
+                    console.log("TB: " + dash.dist.tb);
+                    console.log("Yếu: " + dash.dist.yeu);
+                    alert("Đã in báo cáo ra Console");
+                    break;
+                case "7":
+                    isRunning = false;
+                    break;
+            }
+        }
+    </script>
+</body>
+
+</html>
