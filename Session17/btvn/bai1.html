@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chuẩn bị Tết Nguyên Đán</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 500px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #d32f2f;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .header h2 {
+            margin: 0 0 5px 0;
+            font-size: 24px;
+        }
+
+        .header p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .todo-list {
+            list-style: none;
+            padding: 20px;
+            margin: 0;
+            background-color: #fdfaf6;
+        }
+
+        .todo-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fffaf0;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ff9800;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .todo-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon {
+            color: #f48fb1;
+            font-size: 18px;
+        }
+
+        .task-name {
+            font-size: 16px;
+            color: #333;
+        }
+
+        .task-status {
+            font-size: 13px;
+            color: #888;
+            font-style: italic;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 13px;
+            color: #777;
+            border-top: 1px solid #eee;
+            background-color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Chuẩn bị Tết Nguyên Đán</h2>
+            <p>Danh sách việc cần làm</p>
+        </div>
+        <ul class="todo-list" id="todoList"></ul>
+        <div class="footer" id="footerText">Đã lưu vào localStorage lần đầu tiên • Refresh trang để kiểm tra</div>
+    </div>
+    <script>
+        const todos = [{ id: 1, task: "Mua bánh chưng", done: false }, { id: 2, task: "Dọn nhà đón Tết", done: false }, { id: 3, task: "Gói bánh chưng", done: false }, { id: 4, task: "Trang trí nhà cửa", done: false }];
+        if (!localStorage.getItem("myTodos")) {
+            localStorage.setItem("myTodos", JSON.stringify(todos));
+        }
+        const listElement = document.getElementById("todoList");
+        todos.forEach(item => {
+            const li = document.createElement("li");
+            li.className = "todo-item";
+            li.innerHTML = `<div class="todo-left"><span class="icon">🌸</span><span class="task-name">${item.task}</span></div><span class="task-status">Chưa làm</span>`;
+            listElement.appendChild(li);
+        });
+    </script>
+</body>
+
+</html>

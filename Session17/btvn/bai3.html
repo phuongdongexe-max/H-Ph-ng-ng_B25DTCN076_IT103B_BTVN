@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Công việc chuẩn bị Tết</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #fcfaf2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f0eadd;
+        }
+
+        .header {
+            background-color: #cc292b;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .header h1 {
+            font-size: 26px;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .input-section {
+            display: flex;
+            padding: 20px;
+            background-color: #fffaf0;
+            border-bottom: 1px solid #f0eadd;
+        }
+
+        #new-task {
+            flex-grow: 1;
+            padding: 10px 15px;
+            border: 1px solid #e0d8c3;
+            border-radius: 4px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        #add-btn {
+            background-color: #f58220;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-left: 10px;
+            border-radius: 4px;
+            font-size: 15px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #add-btn:hover {
+            background-color: #e07218;
+        }
+
+        #todo-list {
+            list-style: none;
+            padding: 20px 20px 10px 20px;
+            background-color: #fffaf0;
+        }
+
+        .todo-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: #fffff8;
+            border: 1px solid #f5ebd4;
+            border-left: 5px solid #ffb300;
+        }
+
+        .todo-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 1px solid #ccc;
+            margin-right: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            color: transparent;
+            background-color: white;
+        }
+
+        .text {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .todo-item.done {
+            background-color: #eef7ee;
+            border-color: #eef7ee;
+            border-left: 5px solid #4caf50;
+        }
+
+        .todo-item.done .icon {
+            background-color: #4caf50;
+            border-color: #4caf50;
+            color: white;
+        }
+
+        .todo-item.done .text {
+            color: #888;
+            text-decoration: line-through;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 13px;
+            color: #999;
+            background-color: #fbfbfb;
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Công việc chuẩn bị Tết</h1>
+            <p>Thêm công việc mới & đánh dấu hoàn thành</p>
+        </div>
+        <div class="input-section">
+            <input type="text" id="new-task" placeholder="Nhập công việc mới...">
+            <button id="add-btn">Thêm</button>
+        </div>
+        <ul id="todo-list"></ul>
+        <div class="footer">Mọi thay đổi (thêm / đánh dấu) được lưu tự động vào localStorage • Refresh để kiểm tra</div>
+    </div>
+    <script>
+        const initialTodos = [
+            { id: 1, task: "Mua bánh chưng", done: false },
+            { id: 2, task: "Dọn nhà đón Tết", done: false },
+            { id: 3, task: "Gói bánh chưng", done: false },
+            { id: 4, task: "Trang trí nhà cửa bằng hoa mai, hoa đào", done: false },
+            { id: 5, task: "Mua phong bao lì xì", done: false },
+            { id: 6, task: "Chuẩn bị mâm ngũ quả", done: false }
+        ];
+        let todos = JSON.parse(localStorage.getItem("myTodos"));
+        if (!todos) {
+            todos = initialTodos;
+            localStorage.setItem("myTodos", JSON.stringify(todos));
+        }
+        const todoList = document.getElementById("todo-list");
+        const taskInput = document.getElementById("new-task");
+        const addBtn = document.getElementById("add-btn");
+        function renderTodos() {
+            todoList.innerHTML = "";
+            todos.forEach((todo, index) => {
+                const li = document.createElement("li");
+                li.className = `todo-item ${todo.done ? "done" : ""}`;
+                li.onclick = () => toggleTodo(index);
+                const icon = document.createElement("div");
+                icon.className = "icon";
+                icon.innerHTML = todo.done ? "✓" : "";
+                const text = document.createElement("span");
+                text.className = "text";
+                text.textContent = todo.task;
+                li.appendChild(icon);
+                li.appendChild(text);
+                todoList.appendChild(li);
+            });
+        }
+        function toggleTodo(index) {
+            todos[index].done = !todos[index].done;
+            localStorage.setItem("myTodos", JSON.stringify(todos));
+            renderTodos();
+        }
+        function addTask() {
+            const taskText = taskInput.value.trim();
+            if (taskText === "") return;
+            const newTask = {
+                id: Date.now(),
+                task: taskText,
+                done: false
+            };
+            todos.push(newTask);
+            localStorage.setItem("myTodos", JSON.stringify(todos));
+            renderTodos();
+            taskInput.value = "";
+        }
+        addBtn.onclick = addTask;
+        taskInput.addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                addTask();
+            }
+        });
+        renderTodos();
+    </script>
+</body>
+
+</html>

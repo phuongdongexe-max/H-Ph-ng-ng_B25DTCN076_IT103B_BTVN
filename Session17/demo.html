@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browser Storage</title>
+</head>
+
+<body>
+    <h1>Danh Sách Sản Phẩm Chợ Tết</h1>
+    <ul id="product-list">
+        <!-- Danh sách sản phẩm -->
+        <!-- <li>
+            <div class="product">
+                <p>Tên sản phẩm</p>
+                <p>Giá sản phẩm</p>
+            </div>
+         </li> -->
+    </ul>
+    <form id="product-form">
+        <input type="text" id="product-name" placeholder="Tên sản phẩm">
+        <input type="number" id="product-price" placeholder="Giá (VND)">
+        <button type="submit" id="agree-btn" onclick="handleAddProduct(event)">✔️</button>
+        <!--Bên trong "" của sự kiện nên là một hàm để khi sự kiến xảy ra thì hàm đó sẽ được chạy-->
+    </form>
+
+    <script>
+        // let products = [
+        //     { id: 1, name: "Cơm tấm", price: 35000 },
+        //     { id: 2, name: "Bún riêu", price: 35000 },
+        //     { id: 3, name: "Bún cá", price: 35000 },
+        //     { id: 4, name: "Cơm chiên", price: 35000 },
+        //     { id: 5, name: "Phở bò", price: 35000 },
+        // ];
+
+        // localStorage.setItem("products", JSON.stringify(products));
+        let products = JSON.parse(localStorage.getItem("products")) || [];
+
+        let productListElement = document.getElementById("product-list");
+        products.forEach((product) => {
+            productListElement.innerHTML += `<li>
+            <div class="product">
+                <p>${product.name}</p>
+                <p>${product.price}</p>
+                <button onclick = "handleDeleteProduct(${product.id})">Xóa</button>
+            </div>
+         </li>`
+        });
+
+        function renderProduct() {
+            const container = document.getElementById('product-list');
+
+            // Dùng trực tiếp mảng 'products' hiện tại
+            const html = products.map(product => `
+                <li>
+                    <div class="product">
+                        <p>${product.name}</p>
+                        <p>${product.price}</p>
+                        <button onclick="handleDeleteProduct(${product.id})">Xóa</button>
+                    </div>
+                </li>
+            `).join('');
+
+            // Gán vào DOM
+            container.innerHTML = html;
+        };
+        function handleAddProduct(event) {
+            event.preventDefault();
+            let nameInputElement = document.getElementById('product-name');
+            let priceInputElement = document.getElementById('product-price');
+            let newProductName = nameInputElement.value;
+            let newProductPrice = +priceInputElement.value;
+            let newProduct = {
+                id: products.length !== 0 ? products[products.length - 1].id + 1 : 1,
+                name: newProductName,
+                price: newProductPrice,
+            };
+            products.push(newProduct);
+            localStorage.setItem("products", JSON.stringify(products));
+            renderProduct();
+        };
+
+        function handleDeleteProduct(id) {
+            products = products.filter((product) => product.id !== id);                
+            localStorage.setItem("products", JSON.stringify(products));
+            renderProduct();
+        };
+
+
+        renderProduct();
+
+        localStorage.setItem("count", 1);
+        localStorage.setItem("count", localStorage.getItem("count") + 1);
+        console.log(count);
+        
+    </script>
+</body>
+
+</html>
