@@ -1,15 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mini Project</title>
 </head>
+
 <body>
     <script>
+        let students = [];
+        let isRunning = true;
 
-    
+        while (isRunning) {
+            let menu = "--- HỆ THỐNG QUẢN LÝ SINH VIÊN ---\n";
+            menu += "1. Create Student\n";
+            menu += "2. Read All Students\n";
+            menu += "3. Filter Scholarship Candidates\n";
+            menu += "4. Update Student Profile\n";
+            menu += "5. Delete Record\n";
+            menu += "6. Compliance Verification\n";
+            menu += "7. Academic Statistics\n";
+            menu += "8. Data Normalization\n";
+            menu += "9. Exit\n";
+            menu += "Nhập lựa chọn của bạn:";
 
+            let choice = prompt(menu);
+
+            switch (choice) {
+                case "1":
+                    let id = prompt("Nhập ID:");
+                    let name = prompt("Nhập họ tên:");
+                    let age = Number(prompt("Nhập tuổi:"));
+                    let gpa = Number(prompt("Nhập GPA:"));
+                    let status = prompt("Nhập trạng thái (active/inactive):");
+
+                    let newStudent = { id: id, name: name, age: age, gpa: gpa, status: status };
+                    students.push(newStudent);
+                    alert("Đã thêm sinh viên thành công!");
+                    break;
+
+                case "2":
+                    console.log("--- DANH SÁCH SINH VIÊN HIỆN CÓ ---");
+                    console.table(students);
+                    alert("Vui lòng mở Console (F12) để xem danh sách chi tiết dạng bảng.");
+                    break;
+
+                case "3":
+                    let scholarshipCandidates = students.filter(student => student.gpa > 8.0);
+                    console.log("--- DANH SÁCH ỨNG VIÊN HỌC BỔNG ---");
+                    console.table(scholarshipCandidates);
+                    alert("Vui lòng mở Console (F12) để xem danh sách học bổng.");
+                    break;
+
+                case "4":
+                    let updateId = prompt("Nhập ID sinh viên cần cập nhật:");
+                    let studentToUpdate = students.find(student => student.id === updateId);
+
+                    if (studentToUpdate !== undefined) {
+                        let newName = prompt("Nhập họ tên mới:");
+                        let newGpa = Number(prompt("Nhập GPA mới:"));
+                        studentToUpdate.name = newName;
+                        studentToUpdate.gpa = newGpa;
+                        alert("Cập nhật hồ sơ thành công!");
+                    } else {
+                        alert("Không tìm thấy sinh viên có ID này.");
+                    }
+                    break;
+
+                case "5":
+                    let deleteId = prompt("Nhập ID sinh viên cần xóa:");
+                    let deleteIndex = students.findIndex(student => student.id === deleteId);
+
+                    if (deleteIndex !== -1) {
+                        students.splice(deleteIndex, 1);
+                        alert("Xóa bản ghi thành công!");
+                    } else {
+                        alert("Không tìm thấy sinh viên có ID này.");
+                    }
+                    break;
+
+                case "6":
+                    let hasUnder18 = students.some(student => student.age < 18);
+                    let isAllActive = students.every(student => student.status === "active");
+
+                    let complianceMsg = "Tồn tại sinh viên dưới 18 tuổi: " + hasUnder18 + "\n";
+                    complianceMsg += "Toàn bộ danh sách đều 'active': " + isAllActive;
+                    alert(complianceMsg);
+                    break;
+
+                case "7":
+                    if (students.length > 0) {
+                        let totalGpa = students.reduce((accumulator, student) => accumulator + student.gpa, 0);
+                        let averageGpa = totalGpa / students.length;
+                        alert("Điểm GPA trung bình toàn danh sách: " + averageGpa.toFixed(2));
+                    } else {
+                        alert("Hệ thống chưa có dữ liệu sinh viên để tính toán.");
+                    }
+                    break;
+
+                case "8":
+                    let normalizedStudents = students.map(student => {
+                        return {
+                            id: student.id,
+                            name: student.name.toUpperCase(),
+                            age: student.age,
+                            gpa: student.gpa,
+                            status: student.status
+                        };
+                    });
+                    console.log("--- DANH SÁCH CHUẨN HÓA ---");
+                    console.table(normalizedStudents);
+                    alert("Bản sao dữ liệu đã chuẩn hóa được in ra Console (F12).");
+                    break;
+
+                case "9":
+                    isRunning = false;
+                    alert("Đã thoát hệ thống.");
+                    break;
+
+                default:
+                    alert("Lựa chọn không hợp lệ, vui lòng thử lại.");
+                    break;
+            }
+        }
     </script>
 </body>
+
 </html>
