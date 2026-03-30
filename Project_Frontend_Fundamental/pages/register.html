@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đăng ký | Hệ thống quản lý học tập</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="stylesheet" href="../css/register.css">
+</head>
+
+<body>
+
+  <div class="register-container">
+    <h1 class="register-title">Đăng ký tài khoản</h1>
+    <p class="register-subtitle">Đăng ký tài khoản để sử dụng dịch vụ</p>
+
+    <form class="register-form">
+      <!-- Row: Họ và tên đêm + Tên -->
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="lastname">Họ và tên đêm</label>
+          <input class="form-input" type="text" id="lastname" name="lastname" placeholder="" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="firstname">Tên</label>
+          <input class="form-input" type="text" id="firstname" name="firstname" placeholder="" required />
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label class="form-label" for="email">Email</label>
+        <input class="form-input" type="email" id="email" name="email" autocomplete="email" placeholder="you@company.com" required />
+      </div>
+
+      <!-- Mật khẩu -->
+      <div class="form-group">
+        <label class="form-label" for="password">Mật khẩu</label>
+        <input class="form-input" type="password" id="password" name="password" autocomplete="new-password" placeholder="" required />
+      </div>
+
+      <!-- Checkbox: Chính sách và điều khoản -->
+      <div class="form-group form-checkbox">
+        <label class="checkbox-label">
+          <input type="checkbox" id="terms" name="terms" required />
+          <span>Bạn đồng ý với <a href="#" class="link-terms">chính sách và điều khoản</a></span>
+        </label>
+      </div>
+
+      <!-- Button -->
+      <button class="btn-register" type="submit">Đăng ký</button>
+    </form>
+
+    <!-- Login link -->
+    <p class="login-row">
+      Bạn đã có tài khoản? <a href="./index.html">Đăng nhập</a>
+    </p>
+  </div>
+
+</body>
+
+</html>
