@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Study Tracker – Quản lý môn học</title>
+    <link rel="stylesheet" href="../css/product-manager.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body>
+
+    <!-- ════════════ SIDEBAR ════════════ -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar__logo">
+            <div class="logo-icon">
+                <svg width="34" height="34" viewBox="0 0 36 36" fill="none">
+                    <rect width="36" height="36" rx="8" fill="#3B82F6" />
+                    <path d="M8 27 L18 9 L28 27" stroke="#fff" stroke-width="3" stroke-linecap="round"
+                        stroke-linejoin="round" fill="none" />
+                    <rect x="11" y="20" width="14" height="3" rx="1.5" fill="#fff" opacity="0.55" />
+                </svg>
+            </div>
+            <div class="logo-text">
+                <span class="logo-title">Study Tracker</span>
+                <span class="logo-sub">Quản lý tiến độ học tập</span>
+            </div>
+        </div>
+
+        <nav class="sidebar__nav">
+            <a href="#" class="nav-item" id="nav-stats">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                </svg>
+                <span>Thống kê</span>
+            </a>
+            <a href="#" class="nav-item nav-item--active" id="nav-subjects"
+                onclick="showPage('subjects'); return false;">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="7" />
+                    <rect x="14" y="3" width="7" height="7" />
+                    <rect x="14" y="14" width="7" height="7" />
+                    <rect x="3" y="14" width="7" height="7" />
+                </svg>
+                <span>Quản lý môn học</span>
+            </a>
+            <a href="#" class="nav-item" id="nav-lessons" onclick="showPage('lessons'); return false;">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                </svg>
+                <span>Quản lý bài học</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- ════════════ MAIN WRAPPER ════════════ -->
+    <div class="layout">
+
+        <!-- TOP HEADER -->
+        <header class="topbar">
+            <button onclick="logout()" style="margin-right:12px; font-size:0.9rem; color:#ef4444;">
+                Đăng xuất
+            </button>
+            <button class="topbar__menu" onclick="toggleSidebar()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="7" />
+                    <rect x="14" y="3" width="7" height="7" />
+                    <rect x="14" y="14" width="7" height="7" />
+                    <rect x="3" y="14" width="7" height="7" />
+                </svg>
+            </button>
+            <div class="topbar__spacer"></div>
+            <div class="topbar__actions">
+                <button class="topbar__icon-btn">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                    </svg>
+                </button>
+                <button class="topbar__icon-btn">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                        <line x1="12" y1="17" x2="12.01" y2="17" />
+                    </svg>
+                </button>
+                <button class="topbar__icon-btn">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="3" />
+                        <path
+                            d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                    </svg>
+                </button>
+                <button class="topbar__avatar">
+                    <img src="https://i.pravatar.cc/36?img=47" alt="avatar" />
+                </button>
+            </div>
+        </header>
+
+        <!-- ════════ PAGE: QUẢN LÝ MÔN HỌC ════════ -->
+        <main class="page-content" id="page-subjects">
+            <div class="page-header">
+                <h1 class="page-title">Môn học</h1>
+                <div class="page-header__controls">
+                    <div class="select-wrapper">
+                        <select id="filter-status" class="select-filter" onchange="applyFilters()">
+                            <option value="">Lọc theo trạng thái</option>
+                            <option value="active">Đang hoạt động</option>
+                            <option value="inactive">Ngừng hoạt động</option>
+                        </select>
+                        <svg class="select-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                    </div>
+                    <button class="btn-primary" onclick="openAddSubjectModal()">Thêm mới môn học</button>
+                </div>
+            </div>
+
+            <div class="search-row">
+                <div class="search-box">
+                    <input type="text" id="search-subject" class="search-input" placeholder="Tìm kiếm môn học theo tên…"
+                        oninput="applyFilters()" />
+                    <svg class="search-box__icon" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th class="col-name sortable" onclick="sortTable('name')">
+                                Tên môn học
+                                <svg class="sort-icon" id="sort-icon-name" width="13" height="13" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <line x1="12" y1="5" x2="12" y2="19" />
+                                    <polyline points="19 12 12 19 5 12" />
+                                </svg>
+                            </th>
+                            <th class="col-status">Trạng thái</th>
+                            <th class="col-actions">Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody id="subjects-tbody"></tbody>
+                </table>
+                <div class="empty-state" id="subjects-empty" style="display:none;">
+                    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="1.5">
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                    <p>Không tìm thấy môn học nào</p>
+                </div>
+            </div>
+
+            <div class="pagination" id="subjects-pagination"></div>
+        </main>
+
+        <!-- ════════ PAGE: QUẢN LÝ BÀI HỌC ════════ -->
+        <main class="page-content" id="page-lessons" style="display:none;">
+            <div class="page-header">
+                <h1 class="page-title">Bài học</h1>
+                <div class="page-header__controls">
+                    <div class="select-wrapper">
+                        <select id="filter-lesson-subject" class="select-filter" onchange="applyLessonFilters()">
+                            <option value="">Lọc theo môn học</option>
+                        </select>
+                        <svg class="select-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                    </div>
+                    <button class="btn-primary" onclick="openAddLessonModal()">Thêm mới bài học</button>
+                </div>
+            </div>
+
+            <div class="search-row">
+                <div class="search-box">
+                    <input type="text" id="search-lesson" class="search-input" placeholder="Tìm kiếm bài học theo tên…"
+                        oninput="applyLessonFilters()" />
+                    <svg class="search-box__icon" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th class="col-check"><input type="checkbox" id="check-all-lessons"
+                                    onchange="toggleAllLessons(this)" /></th>
+                            <th class="col-name sortable" onclick="sortLessons('name')">
+                                Tên bài học
+                                <svg class="sort-icon" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <line x1="12" y1="5" x2="12" y2="19" />
+                                    <polyline points="19 12 12 19 5 12" />
+                                </svg>
+                            </th>
+                            <th class="col-duration sortable" onclick="sortLessons('duration')">
+                                Thời gian học
+                                <svg class="sort-icon" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <line x1="12" y1="5" x2="12" y2="19" />
+                                    <polyline points="19 12 12 19 5 12" />
+                                </svg>
+                            </th>
+                            <th class="col-status">Trạng thái</th>
+                            <th class="col-actions">Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lessons-tbody"></tbody>
+                </table>
+                <div class="empty-state" id="lessons-empty" style="display:none;">
+                    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="1.5">
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                    <p>Không tìm thấy bài học nào</p>
+                </div>
+            </div>
+            <div class="pagination" id="lessons-pagination"></div>
+        </main>
+
+    </div><!-- /.layout -->
+
+    <!-- ════════════ MODAL: MÔN HỌC ════════════ -->
+    <div class="modal-overlay" id="modal-subject" onclick="handleOverlayClick(event,'modal-subject')">
+        <div class="modal">
+            <div class="modal__header">
+                <h2 class="modal__title" id="modal-subject-title">Thêm mới môn học</h2>
+                <button class="modal__close" onclick="closeModal('modal-subject')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal__body">
+                <div class="form-group">
+                    <label class="form-label">Tên môn học</label>
+                    <input type="text" id="subject-name-input" class="form-input" placeholder="Nhập tên môn học…"
+                        oninput="clearError('subject-name-error')" />
+                    <span class="form-error" id="subject-name-error"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Trạng thái</label>
+                    <div class="select-wrapper">
+                        <select id="subject-status-input" class="form-input form-select"
+                            onchange="clearError('subject-status-error')">
+                            <option value="">-- Chọn trạng thái --</option>
+                            <option value="active">Đang hoạt động</option>
+                            <option value="inactive">Ngừng hoạt động</option>
+                        </select>
+                        <svg class="select-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                    </div>
+                    <span class="form-error" id="subject-status-error"></span>
+                </div>
+            </div>
+            <div class="modal__divider"></div>
+            <div class="modal__footer">
+                <button class="btn-cancel" onclick="closeModal('modal-subject')">Hủy</button>
+                <button class="btn-primary" onclick="submitSubjectForm()" id="btn-submit-subject">Thêm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════ MODAL: BÀI HỌC ════════════ -->
+    <div class="modal-overlay" id="modal-lesson" onclick="handleOverlayClick(event,'modal-lesson')">
+        <div class="modal">
+            <div class="modal__header">
+                <h2 class="modal__title" id="modal-lesson-title">Thêm mới bài học</h2>
+                <button class="modal__close" onclick="closeModal('modal-lesson')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal__body">
+                <div class="form-group">
+                    <label class="form-label">Tên bài học</label>
+                    <input type="text" id="lesson-name-input" class="form-input"
+                        placeholder="Session 10 - Cấu trúc điều khiển" oninput="clearError('lesson-name-error')" />
+                    <span class="form-error" id="lesson-name-error"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tên môn học</label>
+                    <div class="select-wrapper">
+                        <select id="lesson-subject-input" class="form-input form-select"
+                            onchange="clearError('lesson-subject-error')">
+                            <option value="">-- Chọn môn học --</option>
+                        </select>
+                        <svg class="select-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                    </div>
+                    <span class="form-error" id="lesson-subject-error"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Thời gian học</label>
+                    <input type="number" id="lesson-duration-input" class="form-input" placeholder="45" min="1"
+                        oninput="clearError('lesson-duration-error')" />
+                    <span class="form-error" id="lesson-duration-error"></span>
+                </div>
+            </div>
+            <div class="modal__divider"></div>
+            <div class="modal__footer">
+                <button class="btn-cancel" onclick="closeModal('modal-lesson')">Hủy</button>
+                <button class="btn-primary" onclick="submitLessonForm()" id="btn-submit-lesson">Thêm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════ MODAL: XÁC NHẬN XÓA ════════════ -->
+    <div class="modal-overlay modal-overlay--dark" id="modal-delete" onclick="handleOverlayClick(event,'modal-delete')">
+        <div class="modal modal--confirm">
+            <div class="confirm__icon-wrap">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="8" x2="12" y2="12" />
+                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+            </div>
+            <h2 class="confirm__title">Xác nhận</h2>
+            <p class="confirm__msg" id="confirm-message">Bạn có chắc chắn muốn xóa mục này khỏi hệ thống không?</p>
+            <div class="confirm__divider"></div>
+            <div class="confirm__footer">
+                <button class="btn-cancel" onclick="closeModal('modal-delete')">Hủy</button>
+                <button class="btn-danger" onclick="confirmDelete()">Xóa</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════ TOAST ════════════ -->
+    <div class="toast" id="toast">
+        <div class="toast__icon-wrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+        </div>
+        <div class="toast__content">
+            <p class="toast__title" id="toast-title">Thành công</p>
+            <p class="toast__msg" id="toast-msg">Thao tác thành công</p>
+        </div>
+        <button class="toast__close" onclick="closeToast()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+        </button>
+    </div>
+
+    <script src="../js/product-manager.js"></script>
+    <script>
+        function logout() {
+            if (confirm('Đăng xuất khỏi hệ thống quản trị?')) {
+                localStorage.clear();
+                window.location.href = './index.html';
+            }
+        }
+    </script>
+</body>
+
+</html>
