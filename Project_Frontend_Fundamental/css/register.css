@@ -54,14 +54,14 @@ body {
 .form-row {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 32px;
     margin-bottom: 18px;
 }
 
 @media (min-width: 768px) {
     .form-row {
-        grid-template-columns: 3fr 2fr;
-        gap: 20px;
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
     }
 }
 
@@ -115,7 +115,6 @@ body {
 }
 
 #firstname {
-    max-width: 224px;
     max-width: 100%;
 }
 
