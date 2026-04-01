@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng nhập - Study Tracker</title>
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+  <div class="login-container">
+    <!-- Nội dung form sẽ được style trong login.css -->
+    <div class="form-wrapper">
+      <h1>Đăng nhập</h1>
+      <p class="subtitle">Đăng nhập tài khoản để sử dụng hệ thống quản lý.</p>
+
+      <form id="loginForm">
+        <div class="input-group">
+          <label>Email</label>
+          <input type="email" id="email" placeholder="you@email.com" required>
+        </div>
+        <div class="input-group">
+          <label>Mật khẩu</label>
+          <input type="password" id="password" placeholder="••••••••" required>
+        </div>
+
+        <div class="checkbox-row">
+          <label><input type="checkbox" id="remember"> Nhớ tài khoản</label>
+          <a href="#" class="forgot">Quên mật khẩu?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Đăng nhập</button>
+      </form>
+
+      <p class="link-text">
+        Bạn chưa có tài khoản? 
+        <a href="register.html">Đăng ký</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="../js/index.js"></script>
+</body>
+</html>

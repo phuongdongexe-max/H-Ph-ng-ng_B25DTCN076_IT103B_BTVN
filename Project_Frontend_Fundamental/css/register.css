@@ -1,0 +1,23 @@
+/* Tương tự login.css nhưng thêm style cho name-row */
+body { background: #f8f9fa; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+
+.register-container { width: 100%; max-width: 460px; padding: 40px 20px; }
+
+.form-wrapper {
+  background: white;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.name-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .name-row { grid-template-columns: 1fr; }
+  .register-container { max-width: 100%; padding: 20px 15px; }
+  .form-wrapper { padding: 30px 20px; border-radius: 0; box-shadow: none; min-height: 100vh; }
+}
